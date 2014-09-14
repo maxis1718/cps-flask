@@ -25,7 +25,7 @@
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                 {% for brand, count in brand_count.iteritems() %}
                 <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="{{ url_for('show_product_by_brand', brandname=brand) }}">{{ brand }} ( {{ count }} )</a>
+                    <a role="menuitem" tabindex="-1" href="{{ url_for('show_product_by_brand', brandname=brand, lang=lang) }}">{{ brand }} ( {{ count }} )</a>
                 </li>
                 {% endfor %}
             </ul>

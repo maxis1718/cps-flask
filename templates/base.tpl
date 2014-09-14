@@ -39,7 +39,6 @@
 </head>
 
 <body>
-
 <div id="navbar-top" class="navbar navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -50,28 +49,28 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="" id="news">
-                    <a href="/news/" lang="zh">新聞列表</a>
-                    <a class="hide" href="/news/" lang="en">News</a>
+                    <a class="{{ 'hide' if lang != 'zh' else '' }}" href="/zh/news/" lang="zh">新聞列表</a>
+                    <a class="{{ 'hide' if lang != 'en' else '' }}" href="/en/news/" lang="en">News</a>
                 </li>
                 <li class="" id="product">
-                    <a href="/products/" lang="zh">產品</a>
-                    <a class="hide"href="/products/" lang="en">Products</a>
+                    <a class="{{ 'hide' if lang != 'zh' else '' }}" href="/zh/products/" lang="zh">產品</a>
+                    <a class="{{ 'hide' if lang != 'en' else '' }}"href="/en/products/" lang="en">Products</a>
                 </li>
                 <li class="" id="about">
-                    <a href="/about/" lang="zh">公司簡介</a>
-                    <a class="hide"href="/about/" lang="en">About</a>
+                    <a class="{{ 'hide' if lang != 'zh' else '' }}" href="/zh/about/" lang="zh">公司簡介</a>
+                    <a class="{{ 'hide' if lang != 'en' else '' }}"href="/en/about/" lang="en">About</a>
                 </li>
                 <li class="" id="download">
-                    <a href="/download/" lang="zh">軟體下載</a>
-                    <a class="hide"href="/download/" lang="en">Download</a>
+                    <a class="{{ 'hide' if lang != 'zh' else '' }}" href="/zh/download/" lang="zh">軟體下載</a>
+                    <a class="{{ 'hide' if lang != 'en' else '' }}" href="/en/download/" lang="en">Download</a>
                 </li>
                 <li class="" id="contact">
-                    <a href="/contact/" lang="zh">聯絡我們</a>
-                    <a class="hide"href="/contact/" lang="en">Contact</a>
+                    <a class="{{ 'hide' if lang != 'zh' else '' }}" href="/zh/contact/" lang="zh">聯絡我們</a>
+                    <a class="{{ 'hide' if lang != 'en' else '' }}" href="/en/contact/" lang="en">Contact</a>
                 </li>
                 <li class="" id="https:--www.facebook.com-CPsquare3C">
-                    <a href="https://www.facebook.com/CPsquare3C" target="_blank" lang="zh">FB粉絲團</a>
-                    <a class="hide"href="https://www.facebook.com/CPsquare3C" target="_blank" lang="en">Facebook</a>
+                    <a class="{{ 'hide' if lang != 'zh' else '' }}" href="https://www.facebook.com/CPsquare3C" target="_blank" lang="zh">FB粉絲團</a>
+                    <a class="{{ 'hide' if lang != 'en' else '' }}" href="https://www.facebook.com/CPsquare3C" target="_blank" lang="en">Facebook</a>
                 </li>
             </ul>
             <!-- Language selector -->
@@ -79,8 +78,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#zh">繁體中文</a></li>
-                        <li><a href="#en">English</a></li>
+                        <li><a href="/zh/{{ request.path.split(lang+'/')[1] }}">繁體中文</a></li>
+                        <li><a href="/en/{{ request.path.split(lang+'/')[1] }}">English</a></li>
                     </ul>
                 </li>
             </ul>
