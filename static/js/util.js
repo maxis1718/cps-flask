@@ -1,25 +1,24 @@
 
 // var support = ["zh-tw", "en"];
+var CURRENT_LANG = "";
+var DEFAULT_LANG = "zh";
 
 $(window).on('hashchange', function(e){
 
 	var hash = location.hash;
 	var lang = hash.replace( /^#/, '' );
 
-	// console.log('current language:', lang)
-
-	if(lang)
-	{
-		// console.log("change to", lang)
-		changeLanguage(lang);
-	}else
-	{
-		changeLanguage('zh-tw'); // default
+	if(lang) {
+		CURRENT_LANG = lang;
+	}else {
+		CURRENT_LANG = DEFAULT_LANG; // default
 	}
+	changeLanguage(CURRENT_LANG);
 });
 
 function changeLanguage(lang)
 {
+
 	// find all tags with attribute "lang"
 	$.each( $('*[lang]'), function(i, this_obj){
 
@@ -39,7 +38,6 @@ function changeLanguage(lang)
 				$(this_obj).attr("href", current_href+"#"+this_lang);	
 			}			
 		}
-
 		// toggle language
 		if ( this_lang != lang )
 		{
@@ -52,12 +50,11 @@ function changeLanguage(lang)
 		{
 			$(this_obj).removeClass("hide");
 		}
-	})
+	});
 }
 
 
 
 $(document).ready(function(){
 	$(window).trigger('hashchange');
-
 })

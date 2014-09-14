@@ -43,6 +43,48 @@ article2 = {
 articles.append(article1)
 articles.append(article2)
 ########################################################################
+######################## test data ########################
+products = []
+product1 = {
+    "id":1,
+    "image_url": u"images/iPhone6.png", 
+
+    "brand": u"蘋果",
+
+    "title_zh": u"Apple iPhone 6", 
+    "content_zh": [u"64G 儲存空間", u"A8 晶片"],
+    "html_zh": u"<li>64G 儲存空間</li><li>A8 晶片</li>",
+    "type_zh": u"手機",
+
+    "title_en": u"Apple iPhone 6", 
+
+    "content_en": [u"64G Flash", u"A8 Chip"],
+    "html_en": u"<li>64G Flash</li><li>A8 Chip</li>",
+
+    "type_en": u"cellphone",
+}
+
+product2 = {
+    "id":2,
+    "image_url": u"images/samsung_note4.png", 
+
+    "brand": u"三星",
+
+    "title_zh": u"Samsung Note 4",
+    "content_zh": [u"64G 空間", u"Intel 處理器"],
+    "html_zh": u"<li>64G 空間</li><li>Intel 處理器</li>",
+    "type_zh": u"手機",
+
+    "title_en": u"Samsung Note 4", 
+
+    "content_en": [u"64G Flash", u"Intel chip"], 
+    "html_en": u"<li>64G Flash</li><li>Intel chip</li>", 
+
+    "type_en": u"cellphone",
+}
+products.append(product1)
+products.append(product2)
+########################################################################
 
 
 ###############################
@@ -71,7 +113,25 @@ def show_article():
 @app.route('/products/list')
 @app.route('/products/list/')
 def show_products():
-    return render_template( 'products.tpl', settings=settings )
+    from collections import Counter
+    brand_count = dict(Counter(map(lambda x:x['brand'], products)))
+    
+    return render_template( 'products.tpl', settings=settings, product_list=products, brand_count=brand_count )
+
+
+###############################################################
+# should use Javascript instead to handle the brand filtering #
+###############################################################
+@app.route('/products/brand/<brandname>')
+@app.route('/products/brand/<brandname>/')
+def show_product_by_brand(brandname):
+    from collections import Counter
+    brand_count = dict(Counter(map(lambda x:x['brand'], products)))
+
+    ## filter by selected product
+    _products = filter(lambda x:x['brand'] == brandname.strip(), products)
+
+    return render_template( 'products.tpl', settings=settings, product_list=_products, brand_count=brand_count )
 
 @app.route('/products/spec/<product_id>')
 @app.route('/products/spec/<product_id>/')
