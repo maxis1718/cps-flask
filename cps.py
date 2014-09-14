@@ -60,7 +60,7 @@ product1 = {
 
     "content_en": [u"64G Flash", u"A8 Chip"],
     "html_en": u"<li>64G Flash</li><li>A8 Chip</li>",
-    
+
     "type_en": u"cellphone",
 }
 
@@ -113,7 +113,25 @@ def show_article():
 @app.route('/products/list')
 @app.route('/products/list/')
 def show_products():
-    return render_template( 'products.tpl', settings=settings, product_list=products )
+    from collections import Counter
+    brand_count = dict(Counter(map(lambda x:x['brand'], products)))
+    
+    return render_template( 'products.tpl', settings=settings, product_list=products, brand_count=brand_count )
+
+
+###############################################################
+# should use Javascript instead to handle the brand filtering #
+###############################################################
+@app.route('/products/brand/<brandname>')
+@app.route('/products/brand/<brandname>/')
+def show_product_by_brand(brandname):
+    from collections import Counter
+    brand_count = dict(Counter(map(lambda x:x['brand'], products)))
+
+    ## filter by selected product
+    _products = filter(lambda x:x['brand'] == brandname.strip(), products)
+
+    return render_template( 'products.tpl', settings=settings, product_list=_products, brand_count=brand_count )
 
 @app.route('/products/spec/<product_id>')
 @app.route('/products/spec/<product_id>/')
