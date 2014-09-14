@@ -94,28 +94,28 @@ products.append(product2)
 @app.route('/')
 @app.route('/<lang>')
 @app.route('/<lang>/')
-def index(lang="zh"):
+def index(lang=settings.LANG):
     return render_template( 'index.tpl', settings=settings, lang=lang )
 
 @app.route('/<lang>/news')
 @app.route('/<lang>/news/')
 @app.route('/<lang>/news/list')
 @app.route('/<lang>/news/list/')
-def show_news(lang="zh"):
+def show_news(lang=settings.LANG):
     # news_list = get_news_list()
 
     return render_template( 'news.tpl', settings=settings, news_list=articles, lang=lang )
 
 @app.route('/<lang>/news/article/<news_id>')
 @app.route('/<lang>/news/article/<news_id>/')
-def show_article(lang="zh"):
+def show_article(lang=settings.LANG):
     return render_template( 'article.tpl', settings=settings, lang=lang )
 
 @app.route('/<lang>/products')
 @app.route('/<lang>/products/')
 @app.route('/<lang>/products/list')
 @app.route('/<lang>/products/list/')
-def show_products(lang="zh"):
+def show_products(lang=settings.LANG):
     from collections import Counter
     brand_count = dict(Counter(map(lambda x:x['brand'], products)))
     
@@ -127,7 +127,7 @@ def show_products(lang="zh"):
 ###############################################################
 @app.route('/<lang>/products/brand/<brandname>')
 @app.route('/<lang>/products/brand/<brandname>/')
-def show_product_by_brand(brandname, lang="zh"):
+def show_product_by_brand(brandname, lang=settings.LANG):
     from collections import Counter
     brand_count = dict(Counter(map(lambda x:x['brand'], products)))
 
@@ -138,23 +138,23 @@ def show_product_by_brand(brandname, lang="zh"):
 
 @app.route('/<lang>/products/spec/<product_id>')
 @app.route('/<lang>/products/spec/<product_id>/')
-def show_spec(lang="zh"):
+def show_spec(lang=settings.LANG):
     return render_template( 'product.tpl', settings=settings, lang=lang )
 
 @app.route('/<lang>/about')
 @app.route('/<lang>/about/')
-def show_about(lang="zh"):
+def show_about(lang=settings.LANG):
     print '>>>>> render show_about in %s' % lang
     return render_template( 'about.tpl', settings=settings, lang=lang )
 
 @app.route('/<lang>/download')
 @app.route('/<lang>/download/')
-def show_download(lang="zh"):
+def show_download(lang=settings.LANG):
     return render_template( 'download.tpl', settings=settings, lang=lang )
 
 @app.route('/<lang>/contact')
 @app.route('/<lang>/contact/')
-def show_contact(lang="zh"):
+def show_contact(lang=settings.LANG):
     return render_template( 'contact.tpl', settings=settings, lang=lang )
 
 ###############################
