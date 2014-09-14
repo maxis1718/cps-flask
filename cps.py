@@ -92,39 +92,42 @@ products.append(product2)
 ###############################
 
 @app.route('/')
-def index():
-    return render_template( 'index.tpl', settings=settings )
+@app.route('/<lang>')
+@app.route('/<lang>/')
+def index(lang="zh"):
+    return render_template( 'index.tpl', settings=settings, lang=lang )
 
-@app.route('/news')
-@app.route('/news/')
-@app.route('/news/list')
-@app.route('/news/list/')
-def show_news():
+@app.route('/<lang>/news')
+@app.route('/<lang>/news/')
+@app.route('/<lang>/news/list')
+@app.route('/<lang>/news/list/')
+def show_news(lang="zh"):
     # news_list = get_news_list()
-    return render_template( 'news.tpl', settings=settings, news_list=articles )
 
-@app.route('/news/article/<news_id>')
-@app.route('/news/article/<news_id>/')
-def show_article():
-    return render_template( 'article.tpl', settings=settings )
+    return render_template( 'news.tpl', settings=settings, news_list=articles, lang=lang )
 
-@app.route('/products')
-@app.route('/products/')
-@app.route('/products/list')
-@app.route('/products/list/')
-def show_products():
+@app.route('/<lang>/news/article/<news_id>')
+@app.route('/<lang>/news/article/<news_id>/')
+def show_article(lang="zh"):
+    return render_template( 'article.tpl', settings=settings, lang=lang )
+
+@app.route('/<lang>/products')
+@app.route('/<lang>/products/')
+@app.route('/<lang>/products/list')
+@app.route('/<lang>/products/list/')
+def show_products(lang="zh"):
     from collections import Counter
     brand_count = dict(Counter(map(lambda x:x['brand'], products)))
     
-    return render_template( 'products.tpl', settings=settings, product_list=products, brand_count=brand_count )
+    return render_template( 'products.tpl', settings=settings, product_list=products, brand_count=brand_count, lang=lang )
 
 
 ###############################################################
 # should use Javascript instead to handle the brand filtering #
 ###############################################################
-@app.route('/products/brand/<brandname>')
-@app.route('/products/brand/<brandname>/')
-def show_product_by_brand(brandname):
+@app.route('/<lang>/products/brand/<brandname>')
+@app.route('/<lang>/products/brand/<brandname>/')
+def show_product_by_brand(brandname, lang="zh"):
     from collections import Counter
     brand_count = dict(Counter(map(lambda x:x['brand'], products)))
 
@@ -133,25 +136,33 @@ def show_product_by_brand(brandname):
 
     return render_template( 'products.tpl', settings=settings, product_list=_products, brand_count=brand_count )
 
-@app.route('/products/spec/<product_id>')
-@app.route('/products/spec/<product_id>/')
-def show_spec():
-    return render_template( 'product.tpl', settings=settings )
+@app.route('/<lang>/products/spec/<product_id>')
+@app.route('/<lang>/products/spec/<product_id>/')
+def show_spec(lang="zh"):
+    return render_template( 'product.tpl', settings=settings, lang=lang )
 
-@app.route('/about')
-@app.route('/about/')
-def about():
-    return render_template( 'about.tpl', settings=settings )
+@app.route('/<lang>/about')
+@app.route('/<lang>/about/')
+def show_about(lang="zh"):
+    print '>>>>> render show_about in %s' % lang
+    return render_template( 'about.tpl', settings=settings, lang=lang )
 
-@app.route('/download')
-@app.route('/download/')
-def download():
-    return render_template( 'download.tpl', settings=settings )
+@app.route('/<lang>/download')
+@app.route('/<lang>/download/')
+def show_download(lang="zh"):
+    return render_template( 'download.tpl', settings=settings, lang=lang )
 
-@app.route('/contact')
-@app.route('/contact/')
-def contact():
-    return render_template( 'contact.tpl', settings=settings )
+@app.route('/<lang>/contact')
+@app.route('/<lang>/contact/')
+def show_contact(lang="zh"):
+    return render_template( 'contact.tpl', settings=settings, lang=lang )
+
+###############################
+##           utils           ##
+###############################
+
+
+
 
 ###############################
 ##         Databases         ##

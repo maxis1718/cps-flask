@@ -56,5 +56,5 @@ function changeLanguage(lang)
 
 
 $(document).ready(function(){
-	$(window).trigger('hashchange');
+	// $(window).trigger('hashchange');
 })
