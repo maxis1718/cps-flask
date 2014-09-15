@@ -2,6 +2,9 @@
 
 from flask import Flask, render_template, url_for, make_response, Response, jsonify, request
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.admin import Admin
+from flask.ext.admin.contrib.sqla import ModelView
+from sqlalchemy_i18n import make_translatable, translation_base, Translatable
 
 import settings
 
@@ -13,6 +16,53 @@ app = Flask(__name__)
 ## ref. http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html#sqlite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 
+
+###############################
+##          Model            ##
+###############################
+
+db = SQLAlchemy(app)
+make_translatable()
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True)
+    email = db.Column(db.String(120), unique=True)
+
+    def __init__(self, username, email):
+        self.username = username
+        self.email = email
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+class News(db.Model, Translatable):
+    __translatable__ = {
+        'locales': ['zh', 'en']
+    }
+
+    locale = 'zh'  # this defines the default locale
+    
+    __translated_columns__ = [
+        db.Column('description', db.String(255)),
+        db.Column('content', db.Text),
+        db.Column('title', db.Text)
+    ]
+
+    id = db.Column(db.Integer, autoincrement = True , primary_key=True)
+    image_url = db.Column(db.String(256))
+    publish_time = db.Column(db.DateTime)
+
+    def __init__(self, image_url, publish_time):
+        self.image_url = image_url
+        self.publish_time = publish_time
+
+    def __repr__(self):
+        return '<News %r>' % self.id
+        
+admin = Admin(app)
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(News, db.session))
 ######################## test data ########################
 articles = []
 article1 = {
@@ -185,23 +235,6 @@ def get_news_list():
 
 
 
-###############################
-##         Databases         ##
-###############################
-
-db = SQLAlchemy(app)
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
-    email = db.Column(db.String(120), unique=True)
-
-    def __init__(self, username, email):
-        self.username = username
-        self.email = email
-
-    def __repr__(self):
-        return '<User %r>' % self.username
 
 
 if __name__ == "__main__":
@@ -220,3 +253,9 @@ if __name__ == "__main__":
         elif opt in ('-d','--debug'): app.debug = True
 
     app.run(host='0.0.0.0', port=port)
+
+
+
+
+
+
