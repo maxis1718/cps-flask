@@ -24,10 +24,10 @@
         </div>
         <div class="news-content-wrap">
             <div class="news-title-wrap">
-                <h3 lang="zh">{{ news['title'] }}</h3>
+                <h3 lang="zh">{{ news.translations[lang].title }}</h3>
             </div>
             <div class="news-description-wrap">
-                <p lang="zh">{{ news['description'] }}</p>
+                <p lang="zh">{{ news.translations[lang].description }}</p>
                 <p class="news-detail-wrap">
                     <a lang="zh">(詳全文)</a>
                                      

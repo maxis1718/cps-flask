@@ -174,21 +174,9 @@ def index(lang=settings.LANG):
 @app.route('/<lang>/news/list/')
 def show_news(lang=settings.LANG):
     # news_list = get_news_list()
-    news_arr = News.query.all()
-
+    news_arr = News.query.options(db.joinedload(News.translations['en'])).all()
     
-    return_arr = []
-    for item in news_arr:
-        dic = {}
-        dic['title'] = item.translations[lang].title
-        dic['content'] = item.translations[ lang ].content
-        dic['description'] = item.translations[lang].description
-        dic['id'] = item.id
-        dic['image_url'] = item.image_url
-        return_arr.append( dic )
-
-
-    return render_template( 'news.tpl', settings=settings, news_list=return_arr, lang=lang )
+    return render_template( 'news.tpl', settings=settings, news_list=news_arr, lang=lang )
 
 @app.route('/<lang>/news/article/<news_id>')
 @app.route('/<lang>/news/article/<news_id>/')
