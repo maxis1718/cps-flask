@@ -180,14 +180,17 @@ def index(lang=settings.LANG):
 @app.route('/<lang>/news/list/')
 def show_news(lang=settings.LANG):
     # news_list = get_news_list()
-    news_arr = News.query.options(db.joinedload(News.translations['en'])).all()
+    news_arr = News.query.all()
     
     return render_template( 'news.tpl', settings=settings, news_list=news_arr, lang=lang )
 
-@app.route('/<lang>/news/article/<news_id>')
-@app.route('/<lang>/news/article/<news_id>/')
-def show_article(lang=settings.LANG):
-    return render_template( 'article.tpl', settings=settings, lang=lang )
+@app.route('/<lang>/news/<news_id>')
+@app.route('/<lang>/news/<news_id>/')
+def show_article(lang=settings.LANG, news_id=1):
+
+    aNews = News.query.filter_by(id=news_id).first()
+
+    return render_template( 'article.tpl', settings=settings, lang=lang, news=aNews )
 
 @app.route('/<lang>/products')
 @app.route('/<lang>/products/')
@@ -198,7 +201,6 @@ def show_article(lang=settings.LANG):
 def show_products(lang=settings.LANG):
 
     product_arr = Product.query.all()
-
     brand_arr = Brand.query.all()
 
     return render_template( 'products.tpl', settings=settings,brand_count=brand_arr, product_list=product_arr, lang=lang )

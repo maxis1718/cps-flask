@@ -31,8 +31,8 @@
                 <p lang="zh">{{ news.translations[lang].description }}</p>
 
                 <p class="news-detail-wrap">
-                    <a lang="zh" class="{{ 'hide' if lang != 'zh' else '' }}">(詳全文)</a>
-                    <a lang="en" class="{{ 'hide' if lang != 'en' else '' }}">(see more)</a>
+                    <a lang="zh" class="{{ 'hide' if lang != 'zh' else '' }}" href="/{{lang}}/news/{{ news.id }}">(詳全文)</a>
+                    <a lang="en" class="{{ 'hide' if lang != 'en' else '' }}" href="/{{lang}}/news/{{ news.id }}">(see more)</a>
                                      
                 </p>
             </div>
