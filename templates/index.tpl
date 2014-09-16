@@ -26,17 +26,20 @@
 </div>
 
 
-<div class="row">
-	<div class="col-md-1"></div>
-	<div class="col-md-7 news-wrap">
+<div class="row footer-wraps">
+	<div class="col-md-1 col-xs-1"></div>
+	<div class="col-md-7 col-xs-7 news-wrap">
 		<h2 lang="{{ lang }}">{{ settings.INDEX_NEWS[lang].decode('utf-8') }}</h2>
-		<div>
-		</div>
+		<ul>
+			{% for news in news_list %}
+			<li><a href="/{{lang}}/news/{{ news.id }}">{{ news.translations[lang].title }}</a></li>
+			{% endfor %}
+		</ul>
 	</div>
-	<div class="col-md-3 other-info-wrap">
+	<div class="col-md-3 col-xs-3 other-info-wrap">
 		<div></div>
 	</div>
-	<div class="col-md-1"></div>
+	<div class="col-md-1 col-xs-1"></div>
 </div>
 
 {% endblock %}

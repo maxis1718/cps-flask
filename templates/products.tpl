@@ -5,7 +5,7 @@
 
 <!-- extrac css -->
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/news.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/products.css') }}">
 {% endblock %}
 
 <!-- extrac js -->
@@ -16,20 +16,13 @@
 
 <div class="row">
     <div class="col-md-2 left">
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-            <span class="" lang="zh">品牌</span>
-            <span class="hide" lang="en">Brand</span>
-            <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                {% for brand in brand_count %}
-                <li role="presentation">
-                    <a role="menuitem" tabindex="-1" href="{{ url_for('show_product_by_brand', brand_id=brand.id, lang=lang) }}">{{ brand.name }} ( {{ brand.id }} )</a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>        
+        <ul class="brand-wrap">
+            {% for brand in brand_count %}
+            <li brandid={{ brand.id }} class={{ "brand-seleted" if bid == brand.id else ""}}>
+                <a href="{{ url_for('show_product_by_brand', brand_id=brand.id, lang=lang) }}">{{ brand.name }} <span class="brand-count"> ( {{ brand.id }} )</span></a>
+            </li>
+            {% endfor %}
+        </ul>    
     </div>
     <div class="col-md-9 middle">
 
@@ -37,26 +30,29 @@
         <div class="row">
             <div class="col-md-12 middle product-wrap" id="product-{{ product['id'] }}">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <div class="product-image-wrap">
                             <a href="/{{lang}}/products/{{product.id}}"><img src={{ url_for('static', filename=product['image_url']) }} width="100%" /></a>
                         </div>                
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="product-description-wrap">
 
                             <div class="product-title-wrap">
-                                <h3 lang="zh">{{ product.translations[lang].title }}</h3>
+                                <h3 lang="{{ lang }}"><a href="/{{lang}}/products/{{product.id}}">{{ product.translations[lang].title }}</a></h3>
                                 
                             </div>
 
                             <div class="product-type-wrap">
-                                <p lang="zh">{{ product.productType.translations[lang].name }} 廠牌：{{ product.brand.translations[lang].name }}</p>
-                                
+                                <p lang="{{ lang }}">
+                                    <span>{{ product.productType.translations[lang].name }}</span>
+                                    <span>|</span>
+                                    <span>{{ "廠牌：" if lang == "zh" else "Brand: "}}<label>{{ product.brand.translations[lang].name }}</label></span>
+                                </p>
                             </div>
 
                             <div class="product-html-content-wrap">
-                                <div lang="zh">{{ product.translations[lang].description }}</div>
+                                <div lang="{{ lang }}">{{ product.translations[lang].description }}</div>
                                 
                             </div>
 
@@ -65,6 +61,7 @@
                 </div>
             </div>
         </div>
+
         {% endfor %}
         
     </div>

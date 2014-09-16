@@ -90,6 +90,18 @@ SEE_MORE = {
     'zh': '(詳全文)'
 }
 
+## products
+BRAND_LABELS = {
+    'brand': {
+        'en': 'Brand',
+        'zh': '品牌'
+    },
+    'showall': {
+        'en': 'Show all',
+        'zh': '不限'
+    }
+}
+
 CONTACT = [
     {
         "title": {

@@ -24,11 +24,10 @@
         </div>
         <div class="news-content-wrap">
             <div class="news-title-wrap">
-
-                <h3 lang="zh">{{ news.translations[lang].title }}</h3>
+                <h3 lang="{{ lang }}"><a href="/{{lang}}/news/{{ news.id }}">{{ news.translations[lang].title }}</a></h3>
             </div>
             <div class="news-description-wrap">
-                <p lang="zh">{{ news.translations[lang].description }}</p>
+                <p lang="{{ lang }}">{{ news.translations[lang].description }}</p>
 
                 <p class="news-detail-wrap">
                     <a lang="{{ lang }}" href="/{{lang}}/news/{{ news.id }}">{{ settings.SEE_MORE[lang].decode('utf-8') }}</a>
