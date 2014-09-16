@@ -60,6 +60,16 @@
                                 
                             </div>
 
+                            {% if related_product %}
+                                <h3>相關產品</h3>
+                                <div class="product-title-wrap">
+
+                                    <h3 lang="zh">{{ related_product.translations[lang].title }}</h3>
+                                    
+                                </div>
+
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>

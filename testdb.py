@@ -65,7 +65,7 @@ db.session.add( product_type1 )
 db.session.add( product_type2 )
 db.session.commit()
 
-product1 = Product( image_url="images/iPhone6.png", publish_time=datetime.now(), product_type_id=1 , brand_id=1 )
+product1 = Product( image_url="images/iPhone6.png", publish_time=datetime.now(), product_type_id=1 , brand_id=1 , related_product_id=0)
 product1.translations['zh'].title = u"iPhone 6"
 product1.translations['en'].title = u"iPhone 6"
 product1.translations['zh'].description = u'<div>新手機上市</div>'
@@ -73,7 +73,7 @@ product1.translations['en'].description = u'<div>New iPhone</div>'
 product1.translations['en'].content = u'<div>Latest iphone</div>'
 product1.translations['zh'].content = u'<div>不只外型變大，更在各方面都顯著提升</div>'
 
-product2 = Product( image_url="images/iPhone6.png", publish_time=datetime.now(), product_type_id=1 , brand_id=1 )
+product2 = Product( image_url="images/iPhone6.png", publish_time=datetime.now(), product_type_id=1 , brand_id=1, related_product_id=0 )
 product2.translations['zh'].title = u"iPhone 7"
 product2.translations['en'].title = u"iPhone 7"
 product2.translations['zh'].description = u'<div>新手機上市</div>'
@@ -82,7 +82,7 @@ product2.translations['en'].content = u'<div>Latest iphone</div>'
 product2.translations['zh'].content = u'<div>不只外型變大，更在各方面都顯著提升</div>'
 
 
-product3 = Product( image_url="images/iPhone6.png", publish_time=datetime.now(), product_type_id=2 , brand_id=2 )
+product3 = Product( image_url="images/iPhone6.png", publish_time=datetime.now(), product_type_id=2 , brand_id=2, related_product_id=2 )
 product3.translations['zh'].title = u"iPhone 7: 耳機"
 product3.translations['en'].title = u"iPhone 7 earphone"
 product3.translations['zh'].description = u'<div>新耳機上市</div>'

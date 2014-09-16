@@ -142,12 +142,16 @@ class Product(db.Model, Translatable):
     publish_time = db.Column(db.DateTime)
     product_type_id = db.Column(db.Integer, db.ForeignKey('product_type.id'))
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
+    
+    related_product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    
 
-    def __init__(self, image_url="", publish_time=datetime.now(), product_type_id=0 , brand_id=0):
+    def __init__(self, image_url="", publish_time=datetime.now(), product_type_id=0 , brand_id=0, related_product_id=0):
         self.image_url = image_url
         self.publish_time = publish_time
         self.product_type_id = product_type_id
         self.brand_id = brand_id
+        self.related_product_id = related_product_id
 
     def __repr__(self):
         return '<Product %r>' % self.id
@@ -218,7 +222,9 @@ def show_product_by_brand(brand_id, lang=settings.LANG):
 def show_spec(lang=settings.LANG, product_id=1):
     product = Product.query.filter_by(id=product_id).first()
 
-    return render_template( 'product.tpl', settings=settings, lang=lang, product=product )
+    related_product = Product.query.filter_by(id=product.related_product_id).first()
+
+    return render_template( 'product.tpl', settings=settings, lang=lang, product=product, related_product=related_product )
 
 @app.route('/<lang>/about')
 @app.route('/<lang>/about/')
