@@ -1,7 +1,8 @@
 {% extends "base.tpl" %}
 
-{% block meta_title %}Contact{% endblock %}
-{% block title %}Contact{% endblock %}
+
+{% block meta_title %}{{ settings.MENU['contact'][lang].decode("utf-8") }}{% endblock %}
+{% block title %}{{ settings.MENU['contact'][lang].decode("utf-8") }}{% endblock %}
 
 <!-- extrac css -->
 {% block extra_css %}

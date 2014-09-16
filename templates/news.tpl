@@ -1,7 +1,7 @@
 {% extends "base.tpl" %}
 
-{% block meta_title %}News{% endblock %}
-{% block title %}News{% endblock %}
+{% block meta_title %}{{ settings.MENU['news'][lang].decode("utf-8") }}{% endblock %}
+{% block title %}{{ settings.MENU['news'][lang].decode("utf-8") }}{% endblock %}
 
 <!-- extrac css -->
 {% block extra_css %}
@@ -24,12 +24,15 @@
         </div>
         <div class="news-content-wrap">
             <div class="news-title-wrap">
+
                 <h3 lang="zh">{{ news.translations[lang].title }}</h3>
             </div>
             <div class="news-description-wrap">
                 <p lang="zh">{{ news.translations[lang].description }}</p>
+
                 <p class="news-detail-wrap">
-                    <a lang="zh">(詳全文)</a>
+                    <a lang="zh" class="{{ 'hide' if lang != 'zh' else '' }}">(詳全文)</a>
+                    <a lang="en" class="{{ 'hide' if lang != 'en' else '' }}">(see more)</a>
                                      
                 </p>
             </div>

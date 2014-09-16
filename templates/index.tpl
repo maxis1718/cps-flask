@@ -1,7 +1,7 @@
 {% extends "base.tpl" %}
 
-{% block meta_title %}首頁{% endblock %}
-{% block title %}首頁{% endblock %}
+{% block meta_title %}{% endblock %}
+{% block title %}{% endblock %}
 
 <!-- extrac css -->
 {% block extra_css %}
