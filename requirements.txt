@@ -10,7 +10,6 @@ Pillow==2.5.3
 SQLAlchemy==0.9.7
 SQLAlchemy-Utils==0.26.16
 SQLAlchemy-i18n==0.8.4
-itsdangerous==0.24
 reportlab==3.1.8
 six==1.8.0
 web.py==0.37
