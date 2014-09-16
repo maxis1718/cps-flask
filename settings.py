@@ -84,6 +84,12 @@ MENU = {
     },
 }
 
+## 
+SEE_MORE = {
+    'en': '(see more)',
+    'zh': '(詳全文)'
+}
+
 CONTACT = [
     {
         "title": {
