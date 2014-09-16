@@ -2,8 +2,6 @@
 
 from flask import Flask, render_template, url_for, make_response, Response, jsonify, request
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.admin import Admin
-from flask.ext.admin.contrib.sqla import ModelView
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
 from datetime import datetime
 import settings
@@ -14,7 +12,7 @@ app = Flask(__name__)
 ## For a relative file path: 3 slashes,  e.g., sqlite:///test.db
 ## For an absolute file path: 4 slashes, e.g., sqlite:////tmp/test.db
 ## ref. http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html#sqlite
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///%s' % 'test.db'
 
 
 ###############################
@@ -35,6 +33,9 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+
+# ========= News ==========
 
 class News(db.Model, Translatable):
     __tablename__ = 'news'
@@ -63,91 +64,98 @@ class NewsTranslation(translation_base(News)):
     description = db.Column(db.String(255))
     content = db.Column( db.Text)
     title = db.Column( db.Text)
+
+
+# ========= Product Type ==========
+
+class ProductType(db.Model, Translatable):
+    __tablename__ = 'product_type'
+
+    __translatable__ = {
+        'locales': ['en', 'zh']
+    }
+
+    locale = 'zh'  # this defines the default locale
+
+    id = db.Column(db.Integer, autoincrement = True , primary_key=True)
+    product =  db.relationship('Product', backref='productType',
+                                lazy='joined')
+
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        return '<ProductType %r>' % self.id
+
+class ProductTypeTranslation(translation_base(ProductType)):
     
+    __tablename__ = 'product_type_translation'
+    
+    name = db.Column( db.String(80) ) 
 
-admin = Admin(app)
-admin.add_view(ModelView(User, db.session))
-admin.add_view(ModelView(News, db.session))
-admin.add_view(ModelView(NewsTranslation, db.session))
-######################## test data ########################
+# ========= Brand ==========
+
+class Brand(db.Model, Translatable):
+    __tablename__ = 'brand'
+
+    __translatable__ = {
+        'locales': ['en', 'zh']
+    }
+
+    locale = 'zh'  # this defines the default locale
+
+    id = db.Column(db.Integer, autoincrement = True , primary_key=True)
+    product =  db.relationship('Product', backref='brand',
+                                lazy='joined')
+
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        return '<Brand %r>' % self.id
+
+class BrandTranslation(translation_base(Brand)):
+    
+    __tablename__ = 'brand_translation'
+    
+    name = db.Column( db.String(80) ) 
+
+# ========= Product ==========
+
+class Product(db.Model, Translatable):
+    __tablename__ = 'product'
+
+    __translatable__ = {
+        'locales': ['en', 'zh']
+    }
+
+    locale = 'zh'  # this defines the default locale
+
+    id = db.Column(db.Integer, autoincrement = True , primary_key=True)
+    image_url = db.Column(db.String(256))
+    publish_time = db.Column(db.DateTime)
+    product_type_id = db.Column(db.Integer, db.ForeignKey('product_type.id'))
+    brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
+
+    def __init__(self, image_url="", publish_time=datetime.now(), product_type_id=0 , brand_id=0):
+        self.image_url = image_url
+        self.publish_time = publish_time
+        self.product_type_id = product_type_id
+        self.brand_id = brand_id
+
+    def __repr__(self):
+        return '<Product %r>' % self.id
+
+class ProductTranslation(translation_base(Product)):
+    
+    __tablename__ = 'product_translation'
+    
+    description = db.Column(db.String(255))
+    content = db.Column( db.Text)
+    title = db.Column( db.Text)
 
 
 
-
-
-
-
-articles = []
-article1 = {
-    "id":1,
-    "image_url": u"images/iPhone6.png", 
-
-    "title_zh": u"iPhone 6: 豈止於大", 
-    "content_zh": u"<div>新手機上市</div>", 
-    "description_zh": u"不只外型變大，更在各方面都顯著提升",
-
-    "title_en": u"iPhone 6: Bigger than bigger", 
-    "content_en": u"<div>Latest iphone</div>", 
-    "description_en": u"iPhone 6 isn’t simply bigger - it’s better in every way, iPhone 6 isn’t simply bigger - it’s better in every way, iPhone 6 isn’t simply bigger - it’s better in every way"
-}
-
-article2 = {
-    "id":2,
-    "image_url": u"images/samsung_note4.png", 
-
-    "title_zh": u"Samsung Note 4",
-    "content_zh": u"<div>新手機上市</div>", 
-    "description_zh": u"感應快捷環（Action Memo快捷Memo、Smart Select全能貼、Image Clip全能剪、Screen Write快速截圖）S Note、Snap Note快拍筆記、Direct Pen Input感應筆寫框",
-
-    "title_en": u"Samsung Note 4", 
-    "content_en": u"<div>Latest Note</div>", 
-    "description_en": u"The precise color saturation and the high contrast of 5.7' Quad HD Super AMOLED display will drive you to feel the fluent and vivid color as if you are looking with the naked eye. High resolution boasts tremendous viewing experience. Truly optimized for web-browsing and e-booking."
-}
-articles.append(article1)
-articles.append(article2)
-########################################################################
-######################## test data ########################
-products = []
-product1 = {
-    "id":1,
-    "image_url": u"images/iPhone6.png", 
-
-    "brand": u"蘋果",
-
-    "title_zh": u"Apple iPhone 6", 
-    "content_zh": [u"64G 儲存空間", u"A8 晶片"],
-    "html_zh": u"<li>64G 儲存空間</li><li>A8 晶片</li>",
-    "type_zh": u"手機",
-
-    "title_en": u"Apple iPhone 6", 
-
-    "content_en": [u"64G Flash", u"A8 Chip"],
-    "html_en": u"<li>64G Flash</li><li>A8 Chip</li>",
-
-    "type_en": u"cellphone",
-}
-
-product2 = {
-    "id":2,
-    "image_url": u"images/samsung_note4.png", 
-
-    "brand": u"三星",
-
-    "title_zh": u"Samsung Note 4",
-    "content_zh": [u"64G 空間", u"Intel 處理器"],
-    "html_zh": u"<li>64G 空間</li><li>Intel 處理器</li>",
-    "type_zh": u"手機",
-
-    "title_en": u"Samsung Note 4", 
-
-    "content_en": [u"64G Flash", u"Intel chip"], 
-    "html_en": u"<li>64G Flash</li><li>Intel chip</li>", 
-
-    "type_en": u"cellphone",
-}
-products.append(product1)
-products.append(product2)
-########################################################################
 
 
 ###############################
@@ -179,7 +187,7 @@ def show_news(lang=settings.LANG):
         dic['image_url'] = item.image_url
         return_arr.append( dic )
 
-    print return_arr
+
     return render_template( 'news.tpl', settings=settings, news_list=return_arr, lang=lang )
 
 @app.route('/<lang>/news/article/<news_id>')
@@ -192,10 +200,32 @@ def show_article(lang=settings.LANG):
 @app.route('/<lang>/products/list')
 @app.route('/<lang>/products/list/')
 def show_products(lang=settings.LANG):
-    from collections import Counter
-    brand_count = dict(Counter(map(lambda x:x['brand'], products)))
+
+    product_arr = Product.query.all()
+
+    return_arr = []
+    for item in product_arr:
+        dic = {}
+        dic['title'] = item.translations[ lang ].title
+        dic['content'] = item.translations[ lang ].content
+        dic['description'] = item.translations[ lang ].description
+        dic['id'] = item.id
+        dic['image_url'] = item.image_url
+        return_arr.append( dic )
+
+    brand_arr = Brand.query.all()
+
+    brand_res__arr = []
+    for item in brand_arr:
+        dic = {}
+        dic['name'] = item.translations[ lang ].name
+        dic['id'] = item.id
+        
+        brand_res__arr.append( dic )
+
     
-    return render_template( 'products.tpl', settings=settings, product_list=products, brand_count=brand_count, lang=lang )
+    
+    return render_template( 'products.tpl', settings=settings,brand_count=brand_res__arr,  product_list=return_arr, lang=lang )
 
 
 ###############################################################
@@ -212,8 +242,7 @@ def show_product_by_brand(brandname, lang=settings.LANG):
 
     return render_template( 'products.tpl', settings=settings, product_list=_products, brand_count=brand_count )
 
-@app.route('/<lang>/products/spec/<product_id>')
-@app.route('/<lang>/products/spec/<product_id>/')
+@app.route('/<lang>/products/<product_id>')
 def show_spec(lang=settings.LANG):
     return render_template( 'product.tpl', settings=settings, lang=lang )
 
