@@ -16,6 +16,7 @@
 
 {% for news in news_list %}
 <div class="row">
+	<p> news </p>
 
 </div>
 {% endfor %}

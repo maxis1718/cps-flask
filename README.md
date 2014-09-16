@@ -30,28 +30,14 @@ python testdb.py
 
 ## News 新聞
 
-### news
-| id (integer)  | image_url (string)  | publish_time (unix timestamp)|
-|:------------- |:---------------:| -------------:|
-| 1     | http://xxx.yyy.xxx/mmm.jpg | 1402342345 |
-
-
-### *news_description*
-| id (integer)  | description (string) |
-|:------------- |:---------------:|
-| 1     | 新手機上市 |
-
-
-
-### *news_content*
-| id (integer)  | content (string) |
-|:------------- |:---------------:|
-| 1     | \<div>新手機上市\</div> |
-
-### *news_title*
-| id (integer)  | title (string) |
-|:------------- |:---------------:|
-| 1     | 手機新知 |
+	{
+		id: <int>,
+		image_url:<str>,
+		publish_time:<timestamp>,
+		description:<str>,
+		content:<str>,
+		title:<str>
+	}
 
 
 ## Product 商品

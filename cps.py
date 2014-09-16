@@ -5,7 +5,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.admin import Admin
 from flask.ext.admin.contrib.sqla import ModelView
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
-
+from datetime import datetime
 import settings
 
 app = Flask(__name__)
@@ -37,33 +37,46 @@ class User(db.Model):
         return '<User %r>' % self.username
 
 class News(db.Model, Translatable):
+    __tablename__ = 'news'
+
     __translatable__ = {
-        'locales': ['zh', 'en']
+        'locales': ['en', 'zh']
     }
 
     locale = 'zh'  # this defines the default locale
-    
-    __translated_columns__ = [
-        db.Column('description', db.String(255)),
-        db.Column('content', db.Text),
-        db.Column('title', db.Text)
-    ]
 
     id = db.Column(db.Integer, autoincrement = True , primary_key=True)
     image_url = db.Column(db.String(256))
     publish_time = db.Column(db.DateTime)
 
-    def __init__(self, image_url, publish_time):
+    def __init__(self, image_url="", publish_time=datetime.now()):
         self.image_url = image_url
         self.publish_time = publish_time
 
     def __repr__(self):
         return '<News %r>' % self.id
-        
+
+class NewsTranslation(translation_base(News)):
+    
+    __tablename__ = 'news_translation'
+    
+    description = db.Column(db.String(255))
+    content = db.Column( db.Text)
+    title = db.Column( db.Text)
+    
+
 admin = Admin(app)
 admin.add_view(ModelView(User, db.session))
 admin.add_view(ModelView(News, db.session))
+admin.add_view(ModelView(NewsTranslation, db.session))
 ######################## test data ########################
+
+
+
+
+
+
+
 articles = []
 article1 = {
     "id":1,
@@ -153,8 +166,21 @@ def index(lang=settings.LANG):
 @app.route('/<lang>/news/list/')
 def show_news(lang=settings.LANG):
     # news_list = get_news_list()
+    news_arr = News.query.all()
 
-    return render_template( 'news.tpl', settings=settings, news_list=articles, lang=lang )
+    
+    return_arr = []
+    for item in news_arr:
+        dic = {}
+        dic['title'] = item.translations[lang].title
+        dic['content'] = item.translations[ lang ].content
+        dic['description'] = item.translations[lang].description
+        dic['id'] = item.id
+        dic['image_url'] = item.image_url
+        return_arr.append( dic )
+
+    print return_arr
+    return render_template( 'news.tpl', settings=settings, news_list=return_arr, lang=lang )
 
 @app.route('/<lang>/news/article/<news_id>')
 @app.route('/<lang>/news/article/<news_id>/')
