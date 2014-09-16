@@ -176,7 +176,8 @@ class ProductTranslation(translation_base(Product)):
 @app.route('/<lang>')
 @app.route('/<lang>/')
 def show_index(lang=settings.LANG):
-    return render_template( 'index.tpl', settings=settings, lang=lang, is_index=True )
+    news_list = News.query.order_by('publish_time').limit(5)
+    return render_template( 'index.tpl', settings=settings, lang=lang, news_list=news_list, is_index=True )
 
 @app.route('/<lang>/news')
 @app.route('/<lang>/news/')
@@ -204,11 +205,11 @@ def show_products(lang=settings.LANG):
 
     product_arr = Product.query.all()
     brand_arr = Brand.query.all()
-
+    print brand_arr
     return render_template( 'products.tpl', settings=settings,brand_count=brand_arr, product_list=product_arr, lang=lang )
 
-@app.route('/<lang>/products/list/brand/<brand_id>')
-@app.route('/<lang>/products/list/brand/<brand_id>/')
+@app.route('/<lang>/products/list/brand/<int:brand_id>')
+@app.route('/<lang>/products/list/brand/<int:brand_id>/')
 def show_product_by_brand(brand_id, lang=settings.LANG):
 
     products = Product.query.filter_by(brand_id=brand_id).all()
@@ -216,7 +217,7 @@ def show_product_by_brand(brand_id, lang=settings.LANG):
 
     brand_arr = Brand.query.all()
 
-    return render_template( 'products.tpl', settings=settings, product_list=products, brand_count=brand_arr , brand_name = brand.translations[lang].name, lang= lang )
+    return render_template( 'products.tpl', settings=settings, product_list=products, brand_count=brand_arr , brand_name=brand.translations[lang].name, bid=brand_id, lang=lang )
 
 @app.route('/<lang>/products/<product_id>')
 def show_spec(lang=settings.LANG, product_id=1):
