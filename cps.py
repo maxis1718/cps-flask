@@ -241,7 +241,16 @@ def show_about(lang=settings.LANG):
 @app.route('/<lang>/download')
 @app.route('/<lang>/download/')
 def show_download(lang=settings.LANG):
-    return render_template( 'download.tpl', settings=settings, lang=lang )
+    softwares = [{
+        "title_zh":"Android 版驅動程式",
+        "title_en":"Driver for Android",
+        "filename":"driver-3.0.3-for-android.zip",
+    },{
+        "title_zh":"iPhone 版驅動程式",
+        "title_en":"Driver for iPhone",
+        "filename":"driver-2.0.1-for-iphone.zip",
+    }]
+    return render_template( 'download.tpl', settings=settings, lang=lang, softwares=softwares )
 
 @app.route('/<lang>/contact')
 @app.route('/<lang>/contact/')
