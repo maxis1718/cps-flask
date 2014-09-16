@@ -17,11 +17,11 @@
 <div class="row">
 	<div class="col-md-1 left"></div>
 	<div class="col-md-10 middle">
-
+	<h2>{{ settings.MENU['about'][lang].decode('utf-8') }}</h2>
 	<article class="about-sections-wrap">
 		{% for section in settings.ABOUT[lang] %}
 		<div class="about-section">
-			<p lang="zh" class="text">{{ section.decode('utf-8') }}</p>
+			<p lang="{{ lang }}" class="text">{{ section.decode('utf-8') }}</p>
 		{% endfor %}
 	</article>
 

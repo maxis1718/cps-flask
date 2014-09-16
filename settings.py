@@ -37,6 +37,11 @@ LANGUAGES = [
 #     SITE CONTENTS     #
 #########################
 
+INDEX_NEWS = {
+    "en": "News",
+    "zh": "最新消息"
+}
+
 MENU_ORDER = [
     "news", 
     "products",
@@ -78,6 +83,29 @@ MENU = {
         "url": "https://www.facebook.com/CPsquare3C"
     },
 }
+
+CONTACT = [
+    {
+        "title": {
+            "en": "Email",
+            "zh": "電子郵件",
+            "before": "fa fa-mobile" ## font-awesome icon
+        },
+        "type": "email",
+        "content": "cpsquaretw@gmail.com",
+        "url": "mailto:cpsquaretw@gmail.com",
+        "before": "fa fa-envelope" ## font-awesome icon
+    },
+    {
+        "title": {
+            "en": "Cellphone",
+            "zh": "手機"
+        },
+        "type": "phone",
+        "content": "+886-982-621-414",
+        "url": "skype:+886982621414?call"
+    }
+]
 
 ## Support Font-Awesome icons
 # http://fortawesome.github.io/Font-Awesome/icons

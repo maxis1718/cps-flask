@@ -48,7 +48,7 @@
     <div class="container">
         <div class="navbar-header">
             {% if settings.SITE_TITLE %}
-            <a class="navbar-brand site-title" href="/">{{ settings.SITE_TITLE[lang].decode('utf-8') }}</a>
+            <a class="navbar-brand site-title" href={{ url_for("show_index", lang=lang) }}>{{ settings.SITE_TITLE[lang].decode('utf-8') }}</a>
             {% endif %}
             {% if settings.SITE_TAGLINE %}
             <p class="navbar-text visible-lg site-tagline">{{ settings.SITE_TAGLINE[lang].decode('utf-8') }}</p>
