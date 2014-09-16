@@ -1,0 +1,14 @@
+
+/*=================================
+        STYLES FOR download
+===================================*/
+
+.download-item-wrap
+{
+  list-style: none;
+}
+  .download-item-wrap .download-item
+  {
+    padding: 5px;
+    background: #eee;
+  }
