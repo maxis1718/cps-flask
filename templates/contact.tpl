@@ -18,25 +18,23 @@
 <div class="row">
 	<div class="col-md-1 left"></div>
 	<div class="col-md-10 middle">
+		<h2>{{ settings.MENU['contact'][lang].decode('utf-8') }}</h2>
 		<div class="row contact-wrap">
 			<div class="col-md-7">
 				<div class="img-wrap">
-
 					<img src="{{ url_for('static', filename='img/contact-us.jpg') }}" width="100%" />
 				</div>
-				
 			</div>
 			<div class="col-md-5">
 				<div class="contact-info-wrap">
-					
-					<i class="fa fa-envelope text {{ 'hide' if lang != 'zh' else '' }}" lang="zh"> 電子郵件</i>
-					<i class="fa fa-envelope text {{ 'hide' if lang != 'en' else '' }}" lang="en"> Email</i>
-					<div class="email"><a href="mailto:cpsquaretw@gmail.com">cpsquaretw@gmail.com</a></div>
-					
-					<i class="fa fa-mobile text {{ 'hide' if lang != 'zh' else '' }}" lang="zh"> 手機</i>
-					<i class="fa fa-mobile text {{ 'hide' if lang != 'en' else '' }}" lang="en"> Cellphone</i>
-					<div class="phone"><a href="skype:+886982621414?call">+886 982 621 414</a></div>
-					
+					{% for item in settings.CONTACT %}
+					<i class="{{ item['before'] }} text" lang="{{ lang }}"> {{ item['title'][lang].decode("utf-8") }}</i>
+					{% if item['url'] %}
+					<div class="{{ item['type'] }}"><a href={{ item['url'] }}>{{ item['content'] }}</a></div>
+					{% else %}
+					<div class="{{ item['type'] }}">{{ item['content'] }}</div>
+					{% endif %}
+					{% endfor %}
 				</div>				
 			</div>
 		</div>

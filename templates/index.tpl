@@ -18,7 +18,7 @@
 	<div class="col-md-1 left"></div>
 	<div class="col-md-10 middle large-banner-wrap">
 		<div class="large-banner">
-			<img src="/static/img/advertise_here.jpg" />
+			<img src="{{ url_for('static', filename='img/advertise_here.jpg') }}"/>
 		</div>
 		<div class="nav-control-wrap"></div>
 	</div>
@@ -29,8 +29,7 @@
 <div class="row">
 	<div class="col-md-1"></div>
 	<div class="col-md-7 news-wrap">
-		<h2 lang="zh-tw">新聞</h2>
-		<h2 class="hide" lang="en">News</h2>
+		<h2 lang="{{ lang }}">{{ settings.INDEX_NEWS[lang].decode('utf-8') }}</h2>
 		<div>
 		</div>
 	</div>

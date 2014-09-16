@@ -171,7 +171,7 @@ class ProductTranslation(translation_base(Product)):
 @app.route('/')
 @app.route('/<lang>')
 @app.route('/<lang>/')
-def index(lang=settings.LANG):
+def show_index(lang=settings.LANG):
     return render_template( 'index.tpl', settings=settings, lang=lang, is_index=True )
 
 @app.route('/<lang>/news')
