@@ -196,8 +196,6 @@ def show_article(lang=settings.LANG, news_id=1):
 @app.route('/<lang>/products/')
 @app.route('/<lang>/products/list')
 @app.route('/<lang>/products/list/')
-@app.route('/<lang>/products/list/brand/')
-@app.route('/<lang>/products/list/brand/')
 def show_products(lang=settings.LANG):
 
     product_arr = Product.query.all()
@@ -205,16 +203,16 @@ def show_products(lang=settings.LANG):
 
     return render_template( 'products.tpl', settings=settings,brand_count=brand_arr, product_list=product_arr, lang=lang )
 
-@app.route('/<lang>/products/list/brand/<brandname>')
-@app.route('/<lang>/products/list/brand/<brandname>/')
-def show_product_by_brand(brandname, lang=settings.LANG):
-    from collections import Counter
-    brand_count = dict(Counter(map(lambda x:x['brand'], products)))
+@app.route('/<lang>/products/list/brand/<brand_id>')
+@app.route('/<lang>/products/list/brand/<brand_id>/')
+def show_product_by_brand(brand_id, lang=settings.LANG):
 
-    ## filter by selected product
-    _products = filter(lambda x:x['brand'] == brandname.strip(), products)
+    products = Product.query.filter_by(brand_id=brand_id).all()
+    brand = Brand.query.filter_by(id=brand_id).first()
 
-    return render_template( 'products.tpl', settings=settings, product_list=_products, brand_count=brand_count )
+    brand_arr = Brand.query.all()
+
+    return render_template( 'products.tpl', settings=settings, product_list=products, brand_count=brand_arr , brand_name = brand.translations[lang].name, lang= lang )
 
 @app.route('/<lang>/products/<product_id>')
 def show_spec(lang=settings.LANG, product_id=1):
