@@ -1,7 +1,7 @@
 {% extends "base.tpl" %}
 
-{% block meta_title %}Download{% endblock %}
-{% block title %}Download{% endblock %}
+{% block meta_title %}{{ settings.MENU['download'][lang].decode("utf-8") }}{% endblock %}
+{% block title %}{{ settings.MENU['download'][lang].decode("utf-8") }}{% endblock %}
 
 <!-- extrac css -->
 {% block extra_css %}

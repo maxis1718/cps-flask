@@ -2,12 +2,17 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="title" content="{% block meta_title %}{% endblock %}">
     <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
     <meta name="description" content="{% block meta_description %}{% endblock %}">
-    <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+    <title>{% block title %}{% endblock %}
+    {% if settings.SITE_TITLE %}
+        {% if not is_index %} | {% endif %}
+    {{ settings.SITE_TITLE[lang] }}
+    {% endif %}</title>
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 
@@ -42,44 +47,34 @@
 <div id="navbar-top" class="navbar navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            {% if settings.SITE_TITLE %}<a class="navbar-brand site-title" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
-            {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg site-tagline">{{ settings.SITE_TAGLINE }}</p>{% endif %}
+            {% if settings.SITE_TITLE %}
+            <a class="navbar-brand site-title" href="/">{{ settings.SITE_TITLE[lang].decode('utf-8') }}</a>
+            {% endif %}
+            {% if settings.SITE_TAGLINE %}
+            <p class="navbar-text visible-lg site-tagline">{{ settings.SITE_TAGLINE[lang].decode('utf-8') }}</p>
+            {% endif %}
         </div>
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+                {% for menu_name in settings.MENU_ORDER %}
                 <li class="" id="news">
-                    <a class="{{ 'hide' if lang != 'zh' else '' }}" href="/zh/news/" lang="zh">新聞列表</a>
-                    <a class="{{ 'hide' if lang != 'en' else '' }}" href="/en/news/" lang="en">News</a>
+                    {% if "//" in settings.MENU[menu_name]['url'].decode('utf-8') %}
+                    <a href={{ settings.MENU[menu_name]['url'].decode('utf-8') }} lang={{ lang }} target="_blank">{{ settings.MENU[menu_name][lang].decode('utf-8') }}</a>                    
+                    {% else %}
+                    <a href={{ url_for('show_'+settings.MENU[menu_name]['url'], lang=lang) }} lang={{ lang }}>{{ settings.MENU[menu_name][lang].decode('utf-8') }}</a>                        
+                    {% endif %}
                 </li>
-                <li class="" id="product">
-                    <a class="{{ 'hide' if lang != 'zh' else '' }}" href="/zh/products/" lang="zh">產品</a>
-                    <a class="{{ 'hide' if lang != 'en' else '' }}"href="/en/products/" lang="en">Products</a>
-                </li>
-                <li class="" id="about">
-                    <a class="{{ 'hide' if lang != 'zh' else '' }}" href="/zh/about/" lang="zh">公司簡介</a>
-                    <a class="{{ 'hide' if lang != 'en' else '' }}"href="/en/about/" lang="en">About</a>
-                </li>
-                <li class="" id="download">
-                    <a class="{{ 'hide' if lang != 'zh' else '' }}" href="/zh/download/" lang="zh">軟體下載</a>
-                    <a class="{{ 'hide' if lang != 'en' else '' }}" href="/en/download/" lang="en">Download</a>
-                </li>
-                <li class="" id="contact">
-                    <a class="{{ 'hide' if lang != 'zh' else '' }}" href="/zh/contact/" lang="zh">聯絡我們</a>
-                    <a class="{{ 'hide' if lang != 'en' else '' }}" href="/en/contact/" lang="en">Contact</a>
-                </li>
-                <li class="" id="https:--www.facebook.com-CPsquare3C">
-                    <a class="{{ 'hide' if lang != 'zh' else '' }}" href="https://www.facebook.com/CPsquare3C" target="_blank" lang="zh">FB粉絲團</a>
-                    <a class="{{ 'hide' if lang != 'en' else '' }}" href="https://www.facebook.com/CPsquare3C" target="_blank" lang="en">Facebook</a>
-                </li>
+                {% endfor %}
             </ul>
             <!-- Language selector -->
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="/zh/{{ request.path.split(lang+'/')[1] }}">繁體中文</a></li>
-                        <li><a href="/en/{{ request.path.split(lang+'/')[1] }}">English</a></li>
+                        {% for LangItem in settings.LANGUAGES %}
+                        <li><a href="/{{ LangItem['url'] }}/{{ request.path.split(lang+'/')[1] }}">{{ LangItem['name'].decode('utf-8') }}</a></li>
+                        {% endfor %}
                     </ul>
                 </li>
             </ul>

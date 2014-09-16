@@ -1,7 +1,7 @@
 {% extends "base.tpl" %}
 
-{% block meta_title %}News{% endblock %}
-{% block title %}News{% endblock %}
+{% block meta_title %}{{ settings.MENU['products'][lang].decode("utf-8") }}{% endblock %}
+{% block title %}{{ settings.MENU['products'][lang].decode("utf-8") }}{% endblock %}
 
 <!-- extrac css -->
 {% block extra_css %}

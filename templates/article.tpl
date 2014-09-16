@@ -1,8 +1,5 @@
 {% extends "base.tpl" %}
 
-{% block meta_title %}新聞{% endblock %}
-{% block title %}新聞{% endblock %}
-
 <!-- extrac css -->
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/article.css') }}">
