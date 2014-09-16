@@ -40,7 +40,7 @@
                             </div>
 
                             <div class="product-type-wrap">
-                                <p lang="{{lang}}">{{ product.productType.translations[lang].name }} 廠牌：{{ product.brand.translations[lang].name }}</p>
+                                <p lang="{{lang}}">{{ product.productType.translations[lang].name }} {{ "廠牌：" if lang == "zh" else "Brand: "}}{{ product.brand.translations[lang].name }}</p>
                                 
                             </div>
 
@@ -51,9 +51,9 @@
 
                             <hr>
                             {% if related_product %}
-                                <h3>相關產品</h3>
+                                <h3>{{ "相關產品" if lang == "zh" else "Related "}}</h3>
                                 <div class="product-title-wrap">
-                                    <h3 lang="{{lang}}">{{ related_product.translations[lang].title }}</h3>
+                                    <h4 lang="{{lang}}">{{ related_product.translations[lang].title }}</h4>
                                 </div>
 
                             {% endif %}
