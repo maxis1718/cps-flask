@@ -9,13 +9,19 @@ cps-flask
 > pip install -r requirements.txt
 ```
 
-- run server on port 8000 for debugging
+- debug
 
 ```sh
 python cps.py -p 8000 -d
 ```
 
-- or test db
+- deployment
+	
+```sh
+gunicorn -b 0.0.0.0:8000 cps:app
+```
+
+- create db for testing
 
 ```sh
 ## will create a test.db file
