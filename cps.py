@@ -181,25 +181,16 @@ def show_index(lang=settings.LANG):
 def show_news(lang=settings.LANG):
     # news_list = get_news_list()
     news_arr = News.query.all()
-
     
-    return_arr = []
-    for item in news_arr:
-        dic = {}
-        dic['title'] = item.translations[lang].title
-        dic['content'] = item.translations[ lang ].content
-        dic['description'] = item.translations[lang].description
-        dic['id'] = item.id
-        dic['image_url'] = item.image_url
-        return_arr.append( dic )
+    return render_template( 'news.tpl', settings=settings, news_list=news_arr, lang=lang )
 
+@app.route('/<lang>/news/<news_id>')
+@app.route('/<lang>/news/<news_id>/')
+def show_article(lang=settings.LANG, news_id=1):
 
-    return render_template( 'news.tpl', settings=settings, news_list=return_arr, lang=lang )
+    aNews = News.query.filter_by(id=news_id).first()
 
-@app.route('/<lang>/news/article/<news_id>')
-@app.route('/<lang>/news/article/<news_id>/')
-def show_article(lang=settings.LANG):
-    return render_template( 'article.tpl', settings=settings, lang=lang )
+    return render_template( 'article.tpl', settings=settings, lang=lang, news=aNews )
 
 @app.route('/<lang>/products')
 @app.route('/<lang>/products/')
@@ -210,7 +201,6 @@ def show_article(lang=settings.LANG):
 def show_products(lang=settings.LANG):
 
     product_arr = Product.query.all()
-
     brand_arr = Brand.query.all()
 
     return render_template( 'products.tpl', settings=settings,brand_count=brand_arr, product_list=product_arr, lang=lang )

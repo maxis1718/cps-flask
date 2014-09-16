@@ -46,17 +46,17 @@
                         <div class="product-description-wrap">
 
                             <div class="product-title-wrap">
-                                <h3 lang="zh">{{ product['title'] }}</h3>
+                                <h3 lang="zh">{{ product.translations[lang].title }}</h3>
                                 
                             </div>
 
                             <div class="product-type-wrap">
-                                <p lang="zh">{{ product.productType.name }} 廠牌：{{ product.brand.name }}</p>
+                                <p lang="zh">{{ product.productType.translations[lang].name }} 廠牌：{{ product.brand.translations[lang].name }}</p>
                                 
                             </div>
 
                             <div class="product-html-content-wrap">
-                                <div lang="zh">{{ product['description'] }}</div>
+                                <div lang="zh">{{ product.translations[lang].description }}</div>
                                 
                             </div>
 
