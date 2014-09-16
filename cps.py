@@ -2,6 +2,8 @@
 
 from flask import Flask, render_template, url_for, make_response, Response, jsonify, request
 from flask.ext.sqlalchemy import SQLAlchemy
+# from flask.ext.admin import Admin
+# from flask.ext.admin.contrib.sqla import ModelView
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
 from datetime import datetime
 import settings
@@ -65,6 +67,10 @@ class NewsTranslation(translation_base(News)):
     content = db.Column( db.Text)
     title = db.Column( db.Text)
 
+# admin = Admin(app)
+# admin.add_view(ModelView(User, db.session))
+# admin.add_view(ModelView(News, db.session))
+# admin.add_view(ModelView(NewsTranslation, db.session))
 
 # ========= Product Type ==========
 
@@ -166,7 +172,7 @@ class ProductTranslation(translation_base(Product)):
 @app.route('/<lang>')
 @app.route('/<lang>/')
 def index(lang=settings.LANG):
-    return render_template( 'index.tpl', settings=settings, lang=lang )
+    return render_template( 'index.tpl', settings=settings, lang=lang, is_index=True )
 
 @app.route('/<lang>/news')
 @app.route('/<lang>/news/')
@@ -199,6 +205,8 @@ def show_article(lang=settings.LANG):
 @app.route('/<lang>/products/')
 @app.route('/<lang>/products/list')
 @app.route('/<lang>/products/list/')
+@app.route('/<lang>/products/list/brand/')
+@app.route('/<lang>/products/list/brand/')
 def show_products(lang=settings.LANG):
 
     product_arr = Product.query.all()
@@ -207,12 +215,8 @@ def show_products(lang=settings.LANG):
 
     return render_template( 'products.tpl', settings=settings,brand_count=brand_arr, product_list=product_arr, lang=lang )
 
-
-###############################################################
-# should use Javascript instead to handle the brand filtering #
-###############################################################
-@app.route('/<lang>/products/brand/<brandname>')
-@app.route('/<lang>/products/brand/<brandname>/')
+@app.route('/<lang>/products/list/brand/<brandname>')
+@app.route('/<lang>/products/list/brand/<brandname>/')
 def show_product_by_brand(brandname, lang=settings.LANG):
     from collections import Counter
     brand_count = dict(Counter(map(lambda x:x['brand'], products)))
@@ -237,7 +241,16 @@ def show_about(lang=settings.LANG):
 @app.route('/<lang>/download')
 @app.route('/<lang>/download/')
 def show_download(lang=settings.LANG):
-    return render_template( 'download.tpl', settings=settings, lang=lang )
+    softwares = [{
+        "title_zh":"Android 版驅動程式",
+        "title_en":"Driver for Android",
+        "filename":"driver-3.0.3-for-android.zip",
+    },{
+        "title_zh":"iPhone 版驅動程式",
+        "title_en":"Driver for iPhone",
+        "filename":"driver-2.0.1-for-iphone.zip",
+    }]
+    return render_template( 'download.tpl', settings=settings, lang=lang, softwares=softwares )
 
 @app.route('/<lang>/contact')
 @app.route('/<lang>/contact/')
