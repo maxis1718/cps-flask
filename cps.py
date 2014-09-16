@@ -203,29 +203,9 @@ def show_products(lang=settings.LANG):
 
     product_arr = Product.query.all()
 
-    return_arr = []
-    for item in product_arr:
-        dic = {}
-        dic['title'] = item.translations[ lang ].title
-        dic['content'] = item.translations[ lang ].content
-        dic['description'] = item.translations[ lang ].description
-        dic['id'] = item.id
-        dic['image_url'] = item.image_url
-        return_arr.append( dic )
-
     brand_arr = Brand.query.all()
 
-    brand_res__arr = []
-    for item in brand_arr:
-        dic = {}
-        dic['name'] = item.translations[ lang ].name
-        dic['id'] = item.id
-        
-        brand_res__arr.append( dic )
-
-    
-    
-    return render_template( 'products.tpl', settings=settings,brand_count=brand_res__arr,  product_list=return_arr, lang=lang )
+    return render_template( 'products.tpl', settings=settings,brand_count=brand_arr, product_list=product_arr, lang=lang )
 
 
 ###############################################################
@@ -243,8 +223,10 @@ def show_product_by_brand(brandname, lang=settings.LANG):
     return render_template( 'products.tpl', settings=settings, product_list=_products, brand_count=brand_count )
 
 @app.route('/<lang>/products/<product_id>')
-def show_spec(lang=settings.LANG):
-    return render_template( 'product.tpl', settings=settings, lang=lang )
+def show_spec(lang=settings.LANG, product_id=1):
+    product = Product.query.filter_by(id=product_id).first()
+
+    return render_template( 'product.tpl', settings=settings, lang=lang, product=product )
 
 @app.route('/<lang>/about')
 @app.route('/<lang>/about/')

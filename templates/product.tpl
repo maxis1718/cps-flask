@@ -33,7 +33,7 @@
     </div>
     <div class="col-md-9 middle">
 
-        {% for product in product_list %}
+        
         <div class="row">
             <div class="col-md-12 middle product-wrap" id="product-{{ product['id'] }}">
                 <div class="row">
@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-        {% endfor %}
+        
         
     </div>
     <div class="col-md-1 right"></div>
