@@ -45,7 +45,7 @@
                             </div>
 
                             <div class="product-html-content-wrap">
-                                <div lang="{{lang}}">{{ product.translations[lang].description }}</div>
+                                <div lang="{{lang}}">{{ product.translations[lang].content }}</div>
                                 
                             </div>
 

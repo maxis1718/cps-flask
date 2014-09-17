@@ -174,7 +174,7 @@ db.session.commit()
 product1 = Product( image_url="images/phone1.jpg", publish_time=datetime.now(), product_type_id=1 , brand_id=1 , related_product_id=0)
 product1.translations['zh'].title = u"MB10"
 product1.translations['en'].title = u"MB10"
-product1.translations['zh'].description = u'<div>新手機上市</div>'
+product1.translations['zh'].description = u'iPhone 6 採用第二代的 64-bit A8 CPU，比前代快上 25% ！至於全新的 M8 協同晶片甚至可以辨出跑步還是踩單車的差異，就連計算距離和熱量都可以做到。'
 product1.translations['en'].description = u'<div>New Phone</div>'
 product1.translations['en'].content = u"""<p style="color: #F58800; padding-bottom: 6px;">■English <br>
 ■Support WCDMA/CDMA<br>
@@ -193,7 +193,7 @@ product1.translations['zh'].content = u"""<p style="color: #F58800; padding-bott
 product2 = Product( image_url="images/phone2.jpg", publish_time=datetime.now(), product_type_id=1 , brand_id=1, related_product_id=0 )
 product2.translations['zh'].title = u"iPhone 7"
 product2.translations['en'].title = u"iPhone 7"
-product2.translations['zh'].description = u'<div>新手機上市</div>'
+product2.translations['zh'].description = u'iPhone 6 採用第二代的 64-bit A8 CPU，比前代快上 25% ！至於全新的 M8 協同晶片甚至可以辨出跑步還是踩單車的差異，就連計算距離和熱量都可以做到。'
 product2.translations['en'].description = u'<div>New iPhone</div>'
 product2.translations['en'].content = u"""<p style="color: #F58800; padding-bottom: 6px;">■金屬外型呈現超凡質感<br>
 ■支援雙模式WCDMA/CDMA<br>
