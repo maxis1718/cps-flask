@@ -18,7 +18,7 @@
 	<div class="col-md-1 left"></div>
 	<div class="col-md-10 middle large-banner-wrap">
 		<div class="large-banner">
-			<img src="{{ url_for('static', filename='img/advertise_here.jpg') }}"/>
+			<img src="{{ url_for('static', filename='images/home.jpg') }}"/>
 		</div>
 		<div class="nav-control-wrap"></div>
 	</div>
