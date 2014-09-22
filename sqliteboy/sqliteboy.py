@@ -973,7 +973,7 @@ except Exception, e:
 # WEB                                                                  #
 #----------------------------------------------------------------------#
 URLS = (
-    './', 'index',
+    '/', 'index',
     './favicon.ico', 'favicon_ico',
     './table/action', 'table_action',
     './table/browse/(.*)', 'table_browse',
@@ -3119,7 +3119,7 @@ def proc_admin_check(handle):
     path = web.ctx.fullpath.lower()
     if not isnosb():
         if not sess.admin == 1:
-            if path.startswith('./vacuum') or path.startswith('./query') or path.startswith('./table') or path.startswith('./admin') or path.startswith('./form/edit') or path.startswith('./report/edit'):
+            if  '/vacuum' in path or '/query' in path or '/table' in path or '/admin' in path or '/form/edit' in path or '/report/edit' in path:
                 if sess.user:
                     return _['e_access_forbidden']
                 else:
@@ -3129,11 +3129,11 @@ def proc_admin_check(handle):
 
 def proc_login(handle):
     path = web.ctx.fullpath.lower()
-    #
     if not isnosb():
         if not sess.user:
-            if path == './favicon.ico': return handle()
-            if not path == './login':
+            if '/favicon.ico' in path:
+                return handle()
+            if '/login' not in path:
                 raise web.seeother('./login')
         else:
             if path == './login':
@@ -3147,21 +3147,19 @@ def proc_nosb(handle):
         #
         if sess.user:
             sess.user = ''
-        #
-        if path.startswith('./login') or  \
-            path.startswith('./logout') or \
-            path.startswith('./password') or \
-            path.startswith('./form') or \
-            path.startswith('./report') or \
-            path.startswith('./notes') or \
-            path.startswith('./files') or \
-            path.startswith('./fs') or \
-            path.startswith('./pages') or \
-            path.startswith('./page') or \
-            path.startswith('./calculator') or \
-            path.startswith('./profile') or \
-            path.startswith('./admin'):
-                raise web.seeother('./')
+        if '/login' in path or \
+            '/logout' in path or \
+            '/password' in path or \
+            '/form' in path or \
+            '/notes' in path or \
+            '/files' in path or \
+            '/fs' in path or \
+            '/pages' in path or \
+            '/page' in path or \
+            '/calculator' in path or \
+            '/profile' in path or \
+            '/admin' in path:
+            raise web.seeother('./')
     #
     return handle()
 
