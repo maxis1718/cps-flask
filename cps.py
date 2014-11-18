@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collections import Counter
 from flask import Flask, render_template, url_for, make_response, Response, jsonify, request
 from flask.ext.sqlalchemy import SQLAlchemy
 # from flask.ext.admin import Admin
@@ -205,19 +206,27 @@ def show_products(lang=settings.LANG):
 
     product_arr = Product.query.all()
     brand_arr = Brand.query.all()
-    print brand_arr
-    return render_template( 'products.tpl', settings=settings,brand_count=brand_arr, product_list=product_arr, lang=lang )
+
+    # generate counts for each brands
+    counts = dict(Counter([p.brand_id for p in product_arr]))
+
+    return render_template( 'products.tpl', settings=settings, brands=brand_arr, counts=counts, product_list=product_arr, lang=lang )
 
 @app.route('/<lang>/products/list/brand/<int:brand_id>')
 @app.route('/<lang>/products/list/brand/<int:brand_id>/')
 def show_product_by_brand(brand_id, lang=settings.LANG):
 
+
     products = Product.query.filter_by(brand_id=brand_id).all()
     brand = Brand.query.filter_by(id=brand_id).first()
 
+    product_arr = Product.query.all()
     brand_arr = Brand.query.all()
 
-    return render_template( 'products.tpl', settings=settings, product_list=products, brand_count=brand_arr , brand_name=brand.translations[lang].name, bid=brand_id, lang=lang )
+    # generate counts for each brands
+    counts = dict(Counter([p.brand_id for p in product_arr]))
+
+    return render_template( 'products.tpl', settings=settings, product_list=products, brands=brand_arr, counts=counts, brand_name=brand.translations[lang].name, bid=brand_id, lang=lang )
 
 @app.route('/<lang>/products/<product_id>')
 def show_spec(lang=settings.LANG, product_id=1):

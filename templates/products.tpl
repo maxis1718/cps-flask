@@ -17,9 +17,9 @@
 <div class="row products-container">
     <div class="col-md-2 col-xs-2 left vertical-col">
         <ul class="brand-wrap">
-            {% for brand in brand_count %}
+            {% for brand in brands %}
             <li brandid={{ brand.id }} class={{ "brand-seleted" if bid == brand.id else ""}}>
-                <a href="{{ url_for('show_product_by_brand', brand_id=brand.id, lang=lang) }}">{{ brand.name }} <span class="brand-count"> ( {{ brand.id }} )</span></a>
+                <a href="{{ url_for('show_product_by_brand', brand_id=brand.id, lang=lang) }}">{{ brand.name }} <span class="brand-count"> ( {{ counts[brand.id] }} )</span></a>
             </li>
             {% endfor %}
         </ul>    
