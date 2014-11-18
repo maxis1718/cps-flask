@@ -1,6 +1,10 @@
 /*=================================
             SHARED STYLEs 
 ===================================*/
+body
+{
+  margin-top: 50px;
+}
 a
 {
   /*color: inherit;*/
@@ -26,7 +30,8 @@ a:hover
 #navbar-top
 {
   background: #444;
-  position: relative;
+  position: fixed;
+  box-shadow: 0px 0px 30px -3px #333;
 }
 
   #navbar-top li
@@ -67,7 +72,7 @@ a:hover
     {
       color: #eee;
     }
-    
+
     .navbar-brand
     {
       clear: both;

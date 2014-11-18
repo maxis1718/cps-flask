@@ -14,8 +14,8 @@
 
 {% block main %}
 
-<div class="row">
-    <div class="col-md-2 left">
+<div class="row products-container">
+    <div class="col-md-2 col-xs-2 left vertical-col">
         <ul class="brand-wrap">
             {% for brand in brand_count %}
             <li brandid={{ brand.id }} class={{ "brand-seleted" if bid == brand.id else ""}}>
@@ -24,7 +24,7 @@
             {% endfor %}
         </ul>    
     </div>
-    <div class="col-md-9 middle">
+    <div class="col-md-9 col-xs-9 middle vertical-col">
 
         {% for product in product_list %}
         <div class="row">
@@ -65,7 +65,7 @@
         {% endfor %}
         
     </div>
-    <div class="col-md-1 right"></div>
+    <div class="col-md-1 right vertical-col"></div>
 </div>
 
 {% endblock %}
