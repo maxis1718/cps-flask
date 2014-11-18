@@ -239,7 +239,6 @@ def show_spec(lang=settings.LANG, product_id=1):
 @app.route('/<lang>/about')
 @app.route('/<lang>/about/')
 def show_about(lang=settings.LANG):
-    print '>>>>> render show_about in %s' % lang
     return render_template( 'about.tpl', settings=settings, lang=lang )
 
 @app.route('/<lang>/download')
