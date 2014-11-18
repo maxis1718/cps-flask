@@ -28,6 +28,16 @@
 
 	}
 
+.map-wrap
+{
+	border: 2px dashed #ddd;
+	border-radius: 5px;	
+}
+	.map-wrap iframe
+	{
+		padding: 5px;
+	}
+
 .img-wrap
 {
 	border: 1px dashed #ddd;
