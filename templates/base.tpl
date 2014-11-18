@@ -11,7 +11,7 @@
     <title>{% block title %}{% endblock %}
     {% if settings.SITE_TITLE %}
         {% if not is_index %} | {% endif %}
-    {{ settings.SITE_TITLE[lang] }}
+    {{ ' '.join(settings.SITE_TITLE[lang]) }}
     {% endif %}</title>
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
@@ -46,17 +46,24 @@
 <body>
 <div id="navbar-top" class="navbar navbar-fixed-top" role="navigation">
     <div class="container">
-        <div class="navbar-header">
-            {% if settings.SITE_TITLE %}
-            <a class="navbar-brand site-title" href={{ url_for("show_index", lang=lang) }}>{{ settings.SITE_TITLE[lang].decode('utf-8') }}</a>
-            {% endif %}
-            {% if settings.SITE_TAGLINE %}
-            <p class="navbar-text visible-lg site-tagline">{{ settings.SITE_TAGLINE[lang].decode('utf-8') }}</p>
-            {% endif %}
-        </div>
-
         <div class="navbar-collapse collapse">
+
             <ul class="nav navbar-nav">
+                {% if settings.SITE_TITLE %}
+                <li class="navbar-brand">
+                    <!-- <a class="site-title">中培貿易<br>CPSquare</a> -->
+                    <a class="site-title" href={{ url_for("show_index", lang=lang) }}>
+                        {% for title_line in settings.SITE_TITLE[lang] %}
+                            <div>{{ title_line }}</div>
+                        {% endfor %}
+                    </a>
+                </li>
+                {% endif %}
+                {% if settings.SITE_TAGLINE %}
+                <li class="navbar-tagline">
+                    <a class="site-tagline">{{ settings.SITE_TAGLINE[lang].decode('utf-8') }}</a>
+                </li>
+                {% endif %}
                 {% for menu_name in settings.MENU_ORDER %}
                 <li class="" id="news">
                     {% if "//" in settings.MENU[menu_name]['url'].decode('utf-8') %}

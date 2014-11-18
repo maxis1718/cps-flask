@@ -28,7 +28,7 @@
 
 <div class="row footer-wraps">
 	<div class="col-md-1 col-xs-1"></div>
-	<div class="col-md-7 col-xs-7 news-wrap">
+	<div class="col-md-10 col-xs-7 news-wrap">
 		<h2 lang="{{ lang }}">{{ settings.INDEX_NEWS[lang].decode('utf-8') }}</h2>
 		<ul>
 			{% for news in news_list %}
@@ -36,9 +36,9 @@
 			{% endfor %}
 		</ul>
 	</div>
-	<div class="col-md-3 col-xs-3 other-info-wrap">
+<!-- 	<div class="col-md-3 col-xs-3 other-info-wrap">
 		<div></div>
-	</div>
+	</div> -->
 	<div class="col-md-1 col-xs-1"></div>
 </div>
 

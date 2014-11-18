@@ -67,17 +67,32 @@ a:hover
     {
       color: #eee;
     }
-
-  #navbar-top .navbar-header
-  {
-
-  }
-    #navbar-top .navbar-header .site-title
+    
+    .navbar-brand
     {
-
+      clear: both;
+      text-align: center;
+      padding: 4px 14px;
     }
-    #navbar-top .navbar-header .site-tagline
+    .navbar-brand:hover
     {
-
-      color: #aaa;
-    }  
+      background: none!important;
+    }    
+    .navbar-brand a.site-title 
+    {
+      clear: both;
+      padding: 0px;
+      font-size: 14px;
+    }
+    .navbar-brand .site-title:hover
+    {
+      background: none;
+    }
+    .site-tagline
+    {
+      color: #ccc!important;
+    }
+    .navbar-tagline:hover
+    {
+      background: none!important;
+    }

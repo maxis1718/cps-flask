@@ -4,8 +4,8 @@
 #     SITE SETTINGS     #
 #########################
 SITE_TITLE = {
-    'zh':'CPSquare',
-    'en':'CPSquare'
+    'zh': [u'中培貿易', u'CPSquare'],
+    'en': [u'中培貿易', u'CPSquare'],
 }
 SITE_TAGLINE = {
     'zh':'3c財經發射站',
