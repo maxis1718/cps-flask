@@ -53,7 +53,8 @@
                             {% if related_product %}
                                 <h3>{{ "相關產品" if lang == "zh" else "Related "}}</h3>
                                 <div class="product-title-wrap">
-                                    <h4 lang="{{lang}}">{{ related_product.translations[lang].title }}</h4>
+                                    <h4 lang="{{lang}}">
+                                    <a href="{{ url_for('show_spec', product_id=product.related_product_id, lang=lang) }}">{{ related_product.translations[lang].title }}</a></h4>
                                 </div>
 
                             {% endif %}

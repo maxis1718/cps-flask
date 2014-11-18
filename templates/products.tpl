@@ -55,7 +55,7 @@
                                 <div lang="{{ lang }}">{{ product.translations[lang].description }}</div>
                                 
                             </div>
-
+                            
                         </div>
                     </div>
                 </div>
