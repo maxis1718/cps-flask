@@ -36,7 +36,7 @@ TITLE = NAME + ' ' + VERSION
 DBN = 'sqlite'
 CHECK_SAME_THREAD=False
 FORM_TBL = '_sqliteboy_'
-FORM_URL_INIT = '/sqliteboy/init'
+FORM_URL_INIT = './sqliteboy/init'
 FORM_FIELDS = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
 FORM_FIELDS_R1 = ['rowid', 'rowtime']
 FORM_FIELD_TYPE = 'text'
@@ -150,8 +150,8 @@ CUSTOM_RT = {
                 'calculator': 3,
             } #command, rt 
 PK_SYM = '*'
-URL_README = ('/sqliteboy/readme', 'sqliteboy_readme', 'README.rst')
-URL_SOURCE = ('/sqliteboy/source', 'sqliteboy_source', 'sqliteboy.py')
+URL_README = ('./sqliteboy/readme', 'sqliteboy_readme', 'README.rst')
+URL_SOURCE = ('./sqliteboy/source', 'sqliteboy_source', 'sqliteboy.py')
 PROTECTED_USERS = ['admin']
 FORM_ALL = ''
 FORM_KEY_TITLE = 'title'
@@ -328,7 +328,7 @@ SYSTEM_CONFIG = (
                     ),                    
                 )
 NOTFOUND_CHECK = [
-                    '/fs',
+                    './fs',
                 ]
 REGEX_PAGE = (
                 (
@@ -974,50 +974,50 @@ except Exception, e:
 #----------------------------------------------------------------------#
 URLS = (
     '/', 'index',
-    '/favicon.ico', 'favicon_ico',
-    '/table/action', 'table_action',
-    '/table/browse/(.*)', 'table_browse',
-    '/table/column', 'table_column',
-    '/table/rename', 'table_rename',
-    '/table/empty', 'table_empty',
-    '/table/drop', 'table_drop',
-    '/table/export/csv', 'table_export_csv',
-    '/table/import/csv', 'table_import_csv',
-    '/table/schema', 'table_schema',
-    '/table/copy', 'table_copy',
-    '/table/create', 'table_create',
-    '/query', 'query',
-    '/vacuum', 'vacuum',
-    '/table/row/(.*)', 'table_row',
-    '/table/blob/(.*)', 'table_blob',
-    '/table/save', 'table_save',
+    './favicon.ico', 'favicon_ico',
+    './table/action', 'table_action',
+    './table/browse/(.*)', 'table_browse',
+    './table/column', 'table_column',
+    './table/rename', 'table_rename',
+    './table/empty', 'table_empty',
+    './table/drop', 'table_drop',
+    './table/export/csv', 'table_export_csv',
+    './table/import/csv', 'table_import_csv',
+    './table/schema', 'table_schema',
+    './table/copy', 'table_copy',
+    './table/create', 'table_create',
+    './query', 'query',
+    './vacuum', 'vacuum',
+    './table/row/(.*)', 'table_row',
+    './table/blob/(.*)', 'table_blob',
+    './table/save', 'table_save',
     FORM_URL_INIT, 'sqliteboy_init',
     URL_README[0], URL_README[1],
     URL_SOURCE[0], URL_SOURCE[1],
-    '/login', 'login',
-    '/logout', 'logout',
-    '/password', 'password',
-    '/admin/users', 'admin_users',
-    '/admin/hosts', 'admin_hosts',
-    '/admin/system', 'admin_system',
-    '/admin/backup', 'admin_backup',
-    '/form/action', 'form_action',
-    '/form/run/(.*)', 'form_run',
-    '/form/shortcut/(.*)', 'form_shortcut',
-    '/form/edit', 'form_edit',
-    '/report/action', 'report_action',
-    '/report/run/(.*)', 'report_run',
-    '/report/shortcut/(.*)', 'report_shortcut',
-    '/report/edit', 'report_edit',
-    '/notes', 'notes',
-    '/files', 'files',
-    '/fs', 'fs',
-    '/pages', 'pages',
-    '/page/(.*)', 'page',
-    '/calculator', 'calculator',
-    '/admin/scripts', 'admin_scripts',
-    '/admin/script/(.*)', 'admin_script',
-    '/profile', 'profile',
+    './login', 'login',
+    './logout', 'logout',
+    './password', 'password',
+    './admin/users', 'admin_users',
+    './admin/hosts', 'admin_hosts',
+    './admin/system', 'admin_system',
+    './admin/backup', 'admin_backup',
+    './form/action', 'form_action',
+    './form/run/(.*)', 'form_run',
+    './form/shortcut/(.*)', 'form_shortcut',
+    './form/edit', 'form_edit',
+    './report/action', 'report_action',
+    './report/run/(.*)', 'report_run',
+    './report/shortcut/(.*)', 'report_shortcut',
+    './report/edit', 'report_edit',
+    './notes', 'notes',
+    './files', 'files',
+    './fs', 'fs',
+    './pages', 'pages',
+    './page/(.*)', 'page',
+    './calculator', 'calculator',
+    './admin/scripts', 'admin_scripts',
+    './admin/script/(.*)', 'admin_script',
+    './profile', 'profile',
     )
 
 app = None
@@ -3119,25 +3119,25 @@ def proc_admin_check(handle):
     path = web.ctx.fullpath.lower()
     if not isnosb():
         if not sess.admin == 1:
-            if path.startswith('/vacuum') or path.startswith('/query') or path.startswith('/table') or path.startswith('/admin') or path.startswith('/form/edit') or path.startswith('/report/edit'):
+            if  '/vacuum' in path or '/query' in path or '/table' in path or '/admin' in path or '/form/edit' in path or '/report/edit' in path:
                 if sess.user:
                     return _['e_access_forbidden']
                 else:
-                    raise web.seeother('/login')
+                    raise web.seeother('./login')
     #
     return handle()
 
 def proc_login(handle):
     path = web.ctx.fullpath.lower()
-    #
     if not isnosb():
         if not sess.user:
-            if path == '/favicon.ico': return handle()
-            if not path == '/login':
-                raise web.seeother('/login')
+            if '/favicon.ico' in path:
+                return handle()
+            if '/login' not in path:
+                raise web.seeother('./login')
         else:
-            if path == '/login':
-                raise web.seeother('/')
+            if path == './login':
+                raise web.seeother('./')
     #
     return handle()
 
@@ -3147,21 +3147,19 @@ def proc_nosb(handle):
         #
         if sess.user:
             sess.user = ''
-        #
-        if path.startswith('/login') or  \
-            path.startswith('/logout') or \
-            path.startswith('/password') or \
-            path.startswith('/form') or \
-            path.startswith('/report') or \
-            path.startswith('/notes') or \
-            path.startswith('/files') or \
-            path.startswith('/fs') or \
-            path.startswith('/pages') or \
-            path.startswith('/page') or \
-            path.startswith('/calculator') or \
-            path.startswith('/profile') or \
-            path.startswith('/admin'):
-                raise web.seeother('/')
+        if '/login' in path or \
+            '/logout' in path or \
+            '/password' in path or \
+            '/form' in path or \
+            '/notes' in path or \
+            '/files' in path or \
+            '/fs' in path or \
+            '/pages' in path or \
+            '/page' in path or \
+            '/calculator' in path or \
+            '/profile' in path or \
+            '/admin' in path:
+            raise web.seeother('./')
     #
     return handle()
 
@@ -3250,7 +3248,7 @@ def internalerror():
     return web.internalerror(T(data, content))    
 
 def dflt():
-    raise web.seeother('/')
+    raise web.seeother('./')
 
 def nrfloat(snumber, precision=PRECISION, round=decimal.ROUND_UP):
     le = '0' * precision
@@ -3304,7 +3302,7 @@ def log(msg, newline=1, stream=sys.stdout):
     #
     stream.write('%s%s' %(msg, end) )
 
-def title(t, link='/'):
+def title(t, link='./'):
     ret = ''
     if not link:
         ret = '[%s] [%s] %s' %(TITLE, dbfile0, t.strip())
@@ -3466,7 +3464,7 @@ def menugen():
     if (isnosb()) or (not isnosb() and sess.admin == 1):
         ret.append(
             [
-                '/table/action',
+                './table/action',
                 'get',
                 _['x_table'],
                 f, 
@@ -3510,7 +3508,7 @@ def menugen():
         #
         ret.append(
             [
-                '/form/action',
+                './form/action',
                 'get',
                 _['x_form'],
                 f2, 
@@ -3521,7 +3519,7 @@ def menugen():
         if shortcut_form:
             ret.append(
                 [
-                    '/form/run',
+                    './form/run',
                     'get',
                     '',
                     [], 
@@ -3552,7 +3550,7 @@ def menugen():
         #
         ret.append(
             [
-                '/report/action',
+                './report/action',
                 'get',
                 _['x_report'],
                 f3, 
@@ -3563,7 +3561,7 @@ def menugen():
         if shortcut_report:
             ret.append(
                 [
-                    '/report/run',
+                    './report/run',
                     'get',
                     '',
                     [], 
@@ -3639,11 +3637,11 @@ def sysinfo():
     if isadmin(): 
         s_adm = '%s %s %s %s %s %s' %(
             _['x_yes'], 
-            link('/admin/users', _['cmd_users']),
-            link('/admin/hosts', _['cmd_hosts']),
-            link('/admin/system', _['cmd_system']),
-            link('/admin/backup', _['cmd_backup']),
-            link('/admin/scripts', _['cmd_scripts']),
+            link('./admin/users', _['cmd_users']),
+            link('./admin/hosts', _['cmd_hosts']),
+            link('./admin/system', _['cmd_system']),
+            link('./admin/backup', _['cmd_backup']),
+            link('./admin/scripts', _['cmd_scripts']),
             )
     if isnosb(): s_adm = _['x_not_applicable']
     #
@@ -5709,7 +5707,7 @@ $ pr_get_style = pr_get('style')
 <!DOCTYPE html>
 <html>
 <head>
-<link rel='SHORTCUT ICON' href='/favicon.ico'>
+<link rel='SHORTCUT ICON' href='./favicon.ico'>
 <title>$title(data['title'], '')</title>
 <meta charset='utf-8'>
 $if data.has_key(print_data_key):
@@ -5747,13 +5745,13 @@ $:title(data['title'])
 </td>
 <td align='right' width='25%'>
 $if user():
-    $user() <a href='/password'>$_['cmd_password']</a>
-    <a href='/profile'>$_['cmd_profile']</a> 
-    <a href='/files'>$_['cmd_files']</a> 
-    <a href='/notes'>$_['cmd_notes']</a> 
-    <a href='/pages'>$_['cmd_pages']</a> 
-    <a href='/calculator'>$_['cmd_calculator']</a>
-    <a href='/logout'>$_['cmd_logout']</a>
+    $user() <a href='./password'>$_['cmd_password']</a>
+    <a href='./profile'>$_['cmd_profile']</a> 
+    <a href='./files'>$_['cmd_files']</a> 
+    <a href='./notes'>$_['cmd_notes']</a> 
+    <a href='./pages'>$_['cmd_pages']</a> 
+    <a href='./calculator'>$_['cmd_calculator']</a>
+    <a href='./logout'>$_['cmd_logout']</a>
 </td>
 <td align='right' width='12%'>$size()</td>
 <td align='right' width='18%'>
@@ -5791,13 +5789,13 @@ $for i in menugen():
         </td>
     $else:
         <td width='25%'>
-        $if i[0] == '/table/action':
+        $if i[0] == './table/action':
             $if data.has_key('table'):
                 $i[3].set_value(data['table'])
-        $elif i[0] == '/form/action':
+        $elif i[0] == './form/action':
             $if data.has_key('form'):
                 $i[3].set_value(data['form'])
-        $elif i[0] == '/report/action':
+        $elif i[0] == './report/action':
             $if data.has_key('report'):
                 $i[3].set_value(data['report'])
         $if i[3]:
@@ -6667,9 +6665,9 @@ $elif data['command'] == 'report.run.result':
                     $if cattr.get('type') == 'files.image':
                         $if ccont:
                             $if ca_style:
-                                <img src='/fs?sid=$ccont' style='$ca_style'>
+                                <img src='./fs?sid=$ccont' style='$ca_style'>
                             $else:
-                                <img src='/fs?sid=$ccont' border='0'>
+                                <img src='./fs?sid=$ccont' border='0'>
                         $else:
                             $ccont
                     $else:    
@@ -6726,9 +6724,9 @@ $elif data['command'] == 'report.run.result':
                     $if cattr.get('type') == 'files.image':
                         $if ccont:
                             $if ca_style:
-                                <img src='/fs?sid=$ccont' style='$ca_style'>
+                                <img src='./fs?sid=$ccont' style='$ca_style'>
                             $else:
-                                <img src='/fs?sid=$ccont' border='0'>
+                                <img src='./fs?sid=$ccont' border='0'>
                         $else:
                             $ccont
                     $else:    
@@ -7454,20 +7452,20 @@ class table_action:
         #
         table = input.table.strip()
         redir = (
-            ('browse', '/table/browse/' + table),
-            ('browse/%s' %(DEFAULT_LIMIT), '/table/browse/' + table + '?limit=%s' %(DEFAULT_LIMIT)),
-            ('insert', '/table/row/' + table + '?mode=%s' %(MODE_INSERT)),
-            ('column', '/table/column?table=' + table),
-            ('rename', '/table/rename?table=' + table),
-            ('table_empty', '/table/empty?table=' + table),
-            ('table_drop', '/table/drop?table=' + table),
-            ('export_csv', '/table/export/csv?table=' + table),
-            ('import_csv', '/table/import/csv?table=' + table),
-            ('schema', '/table/schema?table=' + table),
-            ('copy', '/table/copy?table=' + table),
-            ('table_create', '/table/create'),
-            ('query', '/query'),
-            ('vacuum', '/vacuum'),
+            ('browse', './table/browse/' + table),
+            ('browse/%s' %(DEFAULT_LIMIT), './table/browse/' + table + '?limit=%s' %(DEFAULT_LIMIT)),
+            ('insert', './table/row/' + table + '?mode=%s' %(MODE_INSERT)),
+            ('column', './table/column?table=' + table),
+            ('rename', './table/rename?table=' + table),
+            ('table_empty', './table/empty?table=' + table),
+            ('table_drop', './table/drop?table=' + table),
+            ('export_csv', './table/export/csv?table=' + table),
+            ('import_csv', './table/import/csv?table=' + table),
+            ('schema', './table/schema?table=' + table),
+            ('copy', './table/copy?table=' + table),
+            ('table_create', './table/create'),
+            ('query', './query'),
+            ('vacuum', './vacuum'),
         )
         #
         prepsess()
@@ -7485,7 +7483,7 @@ class table_action:
         #
         table = input.table.strip()
         #
-        default_redir = '/table/browse/%s?limit=%s' %(table, DEFAULT_LIMIT)
+        default_redir = './table/browse/%s?limit=%s' %(table, DEFAULT_LIMIT)
         real_redir = default_redir
         http_referer = web.ctx.env.get('HTTP_REFERER', '')
         http_home = web.ctx.home
@@ -7508,7 +7506,7 @@ class table_action:
         #
         elif input.has_key('edit'):
             sess.table[table][SKT_ROWID] = select
-            raise web.seeother('/table/row/%s' %(table))
+            raise web.seeother('./table/row/%s' %(table))
         #
         elif input.has_key('clear'):
             sess.table[table][SKT_ROWID] = []
@@ -7536,7 +7534,7 @@ class table_row:
                 'table': table,
                 'columns': columns(table),
                 'hidden': (('table', table), ('mode', MODE_INSERT)),
-                'action_url': '/table/save',
+                'action_url': './table/save',
                 'action_method': 'post',
                 'action_enctype': 'multipart/form-data',
                 'action_button': (
@@ -7555,14 +7553,14 @@ class table_row:
                 'table': table,
                 'columns': columns(table),
                 'hidden': (('table', table), ('rowid', '')),
-                'action_url': '/table/save',
+                'action_url': './table/save',
                 'action_method': 'post',
                 'action_enctype': 'multipart/form-data',
                 'action_button': (
                                     ('edit', _['cmd_edit'], False, '', 'submit'),
                                 ),
                 'blob_type': BLOB_TYPE,
-                'blob_url': '/table/blob/%s' %(table),
+                'blob_url': './table/blob/%s' %(table),
                 'blob_var': BLOB_VAR,
                 'blob_column': BLOB_COLUMN,
                 'blob_command': _['cmd_download'],
@@ -7609,7 +7607,7 @@ class table_save:
             #
             vk = vars.keys()
             if not vk and len(defs) < 1:
-                raise web.seeother('/table/row/%s?mode=insert' %(table))
+                raise web.seeother('./table/row/%s?mode=insert' %(table))
             #
             if not vk and len(defs) > 0: #no user, has defaults
                 q = 'insert into %s default values' %(table)
@@ -7622,7 +7620,7 @@ class table_save:
                 sess.table[table][SKT_M_INSERT] = _['o_insert']
             except Exception, e:
                 sess.table[table][SKT_M_INSERT] = '%s: %s' %(_['e_insert'], e.message) 
-            raise web.seeother('/table/row/%s?mode=insert' %(table))
+            raise web.seeother('./table/row/%s?mode=insert' %(table))
         else:
             if not rowid:
                 dflt()
@@ -7642,7 +7640,7 @@ class table_save:
             #
             vk = vars.keys()
             if not vk:
-                raise web.seeother('/table/row/%s' %(table))
+                raise web.seeother('./table/row/%s' %(table))
             #
             va = ['%s=$%s' %(v, v) for v in vk] 
             q = 'update %s set %s where rowid=%s' %(table, ','.join(va), rowid)
@@ -7652,7 +7650,7 @@ class table_save:
                 sess.table[table][SKT_M_EDIT] = _['o_edit']
             except Exception, e:
                 sess.table[table][SKT_M_EDIT] = '%s: %s' %(_['e_edit'], e.message) 
-            raise web.seeother('/table/row/%s#%s' %(table, rowid))
+            raise web.seeother('./table/row/%s#%s' %(table, rowid))
         
 
 class table_blob:
@@ -7764,7 +7762,7 @@ class table_browse:
             'command': 'browse',
             'table': table,
             'columns': columns(table),
-            'url': '/table/browse/%s' %(table),
+            'url': './table/browse/%s' %(table),
             'column': order,
             'column_vsort': column_sort,
             'column_query': column_query,
@@ -7776,7 +7774,7 @@ class table_browse:
             'kpage': 'page',
             'limit': glimit, 
             'select': NAME_SELECT,
-            'action_url': '/table/action',
+            'action_url': './table/action',
             'action_method': 'post',
             'action_button': (
                                 ('delete', _['cmd_delete_selected'], True, _['cf_delete_selected'], 'submit'), 
@@ -7786,7 +7784,7 @@ class table_browse:
             'hidden_key': 'table',
             'rowid' : rowid,
             'blob_type': BLOB_TYPE,
-            'blob_url': '/table/blob/%s' %(table),
+            'blob_url': './table/blob/%s' %(table),
             'blob_var': BLOB_VAR,
             'blob_column': BLOB_COLUMN,
             'blob_command': _['cmd_download'],
@@ -7821,7 +7819,7 @@ class table_column:
             'table': table,
             'columns': columns(table),
             'hidden': (('table', table),),
-            'action_url': '/table/column',
+            'action_url': './table/column',
             'action_method': 'post',
             'action_button': (
                                 ('add', _['cmd_add'], False, '', 'submit'),
@@ -7857,7 +7855,7 @@ class table_column:
         type = [x.strip() for x in type]
         #
         if not len(name):
-            raise web.seeother('/table/column?table=%s' %(table))
+            raise web.seeother('./table/column?table=%s' %(table))
         #
         st = []
         for i in range(len(name)):
@@ -7877,7 +7875,7 @@ class table_column:
             st.append([q, name[i]])
         #
         if not st:
-            raise web.seeother('/table/column?table=%s' %(table))
+            raise web.seeother('./table/column?table=%s' %(table))
         #
         err = []
         for s in st:
@@ -7892,7 +7890,7 @@ class table_column:
             msg = _['o_column']
         sess.table[table][SKT_M_COLUMN] = msg
         #
-        raise web.seeother('/table/column?table=%s' %(table))
+        raise web.seeother('./table/column?table=%s' %(table))
         
 
 class table_rename:
@@ -7908,7 +7906,7 @@ class table_rename:
             'command': 'rename',
             'table': table,
             'hidden': (('table', table),),
-            'action_url': '/table/rename',
+            'action_url': './table/rename',
             'action_method': 'post',
             'action_button': (
                                 ('rename', _['cmd_rename'], False, '', 'submit'),
@@ -7928,11 +7926,11 @@ class table_rename:
             dflt()
         #
         if name == table:
-            raise web.seeother('/table/rename?table=%s' %(table))
+            raise web.seeother('./table/rename?table=%s' %(table))
         #
         if hasws(name):
             sess.table[table][SKT_M_RENAME] = _['z_table_whitespace']
-            raise web.seeother('/table/rename?table=%s' %(table))
+            raise web.seeother('./table/rename?table=%s' %(table))
         #
         q = 'alter table %s rename to %s' %(table, name) #FIXME: security sql injection?
         try:
@@ -7947,7 +7945,7 @@ class table_rename:
         #
         sess.table[new][SKT_M_RENAME] = msg
         #
-        redir = '/table/rename?table=%s' %(new)
+        redir = './table/rename?table=%s' %(new)
         raise web.seeother(redir)
 
 
@@ -7964,7 +7962,7 @@ class table_drop:
             'command': 'drop',
             'table': table,
             'hidden': (('table', table), ('confirm', '1')),
-            'action_url': '/table/drop',
+            'action_url': './table/drop',
             'action_method': 'post',
             'action_button': (
                                 ('drop', _['cf_drop'], False, '', 'submit'),
@@ -7990,7 +7988,7 @@ class table_drop:
         except Exception, e:
             msg = '%s: %s' %(_['e_drop'], e.message)
             sess.table[table][SKT_M_DROP] = msg
-            redir = '/table/drop?table=%s' %(table)
+            redir = './table/drop?table=%s' %(table)
             raise web.seeother(redir)
         #
         dflt()        
@@ -8059,7 +8057,7 @@ class query:
         data = {
             'title': '%s' %(_['tt_query']),
             'command': 'query',
-            'action_url': '/query',
+            'action_url': './query',
             'action_method': 'post',
             'action_button': (
                                 ('query', _['cmd_query'], False, '', 'submit'),
@@ -8077,7 +8075,7 @@ class query:
     def POST(self):
         q = web.input(q='').q.strip()
         if not q:
-            raise web.seeother('/query')
+            raise web.seeother('./query')
         #
         start()
         qerr = 0
@@ -8127,7 +8125,7 @@ class query:
             return content            
         else:
             sess.query = [q, err, multi, msg, t]
-            raise web.seeother('/query')
+            raise web.seeother('./query')
         #
         dflt()
 
@@ -8153,7 +8151,7 @@ class table_create:
                 'count': count,
                 'table': table,
                 'hidden': (('count', count), ('table', table), ('step', 'b'),),
-                'action_url': '/table/create',
+                'action_url': './table/create',
                 'action_method': 'post',
                 'action_button': (
                                     ('create', _['cmd_table_create'], False, '', 'submit'),
@@ -8177,7 +8175,7 @@ class table_create:
             data = {
                 'title': '%s' %(_['tt_create']),
                 'command': 'create1',
-                'action_url': '/table/create',
+                'action_url': './table/create',
                 'action_method': 'post',
                 'action_button': (
                                     ('next', _['cmd_next'], False, '', 'submit'),
@@ -8210,9 +8208,9 @@ class table_create:
         #
         if step == 'b':
             if not table or table in tables() or hasws(table):
-                raise web.seeother('/table/create')
+                raise web.seeother('./table/create')
             #
-            url = '/table/create?step=b&table=%s&count=%s' %(table, count)
+            url = './table/create?step=b&table=%s&count=%s' %(table, count)
             #
             if not len(name):
                 raise web.seeother(url)
@@ -8254,7 +8252,7 @@ class table_create:
                 raise web.seeother(url)
             #
             prepsess()
-            raise web.seeother('/table/browse/%s' %(table))
+            raise web.seeother('./table/browse/%s' %(table))
         else:
             if not count or not table or table in tables() or hasws(table):
                 t = 'table=%s' %(table)
@@ -8263,9 +8261,9 @@ class table_create:
                 if hasws(table):
                     t = ''
                     sess[SK_CREATE] = _['z_table_whitespace']
-                raise web.seeother('/table/create?count=%s&%s' %(count, t))
+                raise web.seeother('./table/create?count=%s&%s' %(count, t))
             else:
-                raise web.seeother('/table/create?step=b&count=%s&table=%s' %(count, table))
+                raise web.seeother('./table/create?step=b&count=%s&table=%s' %(count, table))
         #
         dflt()
 
@@ -8351,7 +8349,7 @@ class login:
         data = {
                 'title': _['tt_login'],
                 'command': 'login',
-                'action_url': '/login',
+                'action_url': './login',
                 'action_method': 'post',
                 'action_button': (
                                     ('login', _['cmd_login'], False, '', 'submit'),
@@ -8372,7 +8370,7 @@ class login:
         user = input.user.strip()
         password = input.password.strip()
         if not user or not password:
-            raise web.seeother('/login')
+            raise web.seeother('./login')
         #
         all = s_select('user.account')
         for a in all:
@@ -8383,7 +8381,7 @@ class login:
         #
         if not sess.user:
             sess[SK_LOGIN] = _['e_login']
-            raise web.seeother('/login')
+            raise web.seeother('./login')
         #
         dflt()
         
@@ -8403,7 +8401,7 @@ class password:
         data = {
                 'title': _['tt_password'],
                 'command': 'password',
-                'action_url': '/password',
+                'action_url': './password',
                 'action_method': 'post',
                 'action_button': (
                                     ('password', _['cmd_password'], False, '', 'submit'),
@@ -8429,7 +8427,7 @@ class password:
         me = s_select(q)
         #
         if not len(me) == 1:
-            raise web.seeother('/password')
+            raise web.seeother('./password')
         #
         me0 = me[0]
         if me0['e'] == md5(old).hexdigest():
@@ -8450,7 +8448,7 @@ class password:
         else:
             sess[SK_PASSWORD] = _['e_password_auth']
         #
-        raise web.seeother('/password')
+        raise web.seeother('./password')
 
 
 class admin_users:
@@ -8461,7 +8459,7 @@ class admin_users:
         data = {
                 'title': _['tt_users'],
                 'command': 'users',
-                'action_url': '/admin/users',
+                'action_url': './admin/users',
                 'action_method': 'post',
                 'action_button': (
                                     ('save', _['cmd_save'], False, '', 'submit'),
@@ -8562,7 +8560,7 @@ class admin_users:
                     pass
         #
         sess[SK_USERS] = msg
-        raise web.seeother('/admin/users')
+        raise web.seeother('./admin/users')
                 
 
 class admin_hosts:
@@ -8580,7 +8578,7 @@ class admin_hosts:
         data = {
                 'title': _['tt_hosts'],
                 'command': 'hosts',
-                'action_url': '/admin/hosts',
+                'action_url': './admin/hosts',
                 'action_method': 'post',
                 'action_button': (
                                     ('save', _['cmd_save'], False, '', 'submit'),
@@ -8627,7 +8625,7 @@ class admin_hosts:
         except:
             sess[SK_HOSTS] = _['e_hosts']
         #
-        raise web.seeother('/admin/hosts')
+        raise web.seeother('./admin/hosts')
 
 
 class admin_system:
@@ -8637,7 +8635,7 @@ class admin_system:
         data = {
                 'title': _['tt_system'],
                 'command': 'system',
-                'action_url': '/admin/system',
+                'action_url': './admin/system',
                 'action_method': 'post',
                 'action_button': (
                                     ('save', _['cmd_save'], False, '', 'submit'),
@@ -8694,7 +8692,7 @@ class admin_system:
         except:
             sess[SK_SYSTEM] = _['e_system']
         #
-        raise web.seeother('/admin/system')
+        raise web.seeother('./admin/system')
 
 
 class admin_backup:
@@ -8736,10 +8734,10 @@ class form_action:
         #
         form = input.form.strip()
         redir = (
-            ('run', '/form/run/' + form),
-            ('shortcut', '/form/shortcut/' + form),
-            ('edit', '/form/edit?form=' + form),
-            ('create', '/form/edit?mode=' + MODE_INSERT),
+            ('run', './form/run/' + form),
+            ('shortcut', './form/shortcut/' + form),
+            ('edit', './form/edit?form=' + form),
+            ('create', './form/edit?mode=' + MODE_INSERT),
         )
         for i in redir:
             if input.has_key(i[0]):
@@ -8800,7 +8798,7 @@ class form_run:
                 'message': message,
                 'input': input,
                 'hidden': (('hform', form),),
-                'action_url': '/form/run/%s' %(form),
+                'action_url': './form/run/%s' %(form),
                 'action_method': 'post',
                 'action_enctype': 'multipart/form-data',
                 'action_button': action_button,
@@ -8875,7 +8873,7 @@ class form_run:
                     cv = cv_test.strip()
             except Exception, e:
                 sess[SKF_RUN] = [ [_['e_form_insert_general'], str(e)] ]
-                raise web.seeother('/form/run/%s' %(form))
+                raise web.seeother('./form/run/%s' %(form))
             #
             if required == 1 and not cv:
                 ecols.append(col)
@@ -9081,11 +9079,11 @@ class form_run:
             except Exception, e:
                 form_trans.rollback()
                 sess[SKF_RUN] = [ [_['e_form_insert_general'], str(e)] ]
-                raise web.seeother('/form/run/%s' %(form))
+                raise web.seeother('./form/run/%s' %(form))
             else:
                 form_trans.commit()
         #
-        raise web.seeother('/form/run/%s?%s' %(form, ucontent))
+        raise web.seeother('./form/run/%s?%s' %(form, ucontent))
         
 
 class form_edit:
@@ -9122,7 +9120,7 @@ class form_edit:
         data = {
                 'title': title,
                 'command': 'form.edit',
-                'action_url': '/form/edit',
+                'action_url': './form/edit',
                 'action_method': 'post',
                 'action_button': (
                                     ('save', _['cmd_save'], False, '', 'submit'),
@@ -9160,23 +9158,23 @@ class form_edit:
         if mode == MODE_INSERT:
             if not validfname(name):
                 sess[SKF_CREATE] = [[_['e_form_edit_name']]]
-                raise web.seeother('/form/edit?name=%s&code=%s&mode=%s' %(
+                raise web.seeother('./form/edit?name=%s&code=%s&mode=%s' %(
                         name, urllib.quote(code), MODE_INSERT))
             #
             if hasws(name):
                 sess[SKF_CREATE] = [[_['e_form_edit_whitespace']]]
-                raise web.seeother('/form/edit?name=%s&code=%s&mode=%s' %(
+                raise web.seeother('./form/edit?name=%s&code=%s&mode=%s' %(
                         name, urllib.quote(code), MODE_INSERT))
             #
             if not name or not code:
-                raise web.seeother('/form/edit?name=%s&code=%s&mode=%s' %(
+                raise web.seeother('./form/edit?name=%s&code=%s&mode=%s' %(
                         name, urllib.quote(code), MODE_INSERT))
             #
             all = s_select('form.code')
             allf = [x['d'] for x in all]
             if name in allf:
                 sess[SKF_CREATE] = [[_['e_form_edit_exists']]]
-                raise web.seeother('/form/edit?name=%s&code=%s&mode=%s' %(
+                raise web.seeother('./form/edit?name=%s&code=%s&mode=%s' %(
                         name, urllib.quote(code), MODE_INSERT))
             #
             ocode = code
@@ -9187,28 +9185,28 @@ class form_edit:
                 db.insert(FORM_TBL, a='form', b='code', d=name, e=ocode)
             except Exception, e:
                 sess[SKF_CREATE] = [[_['e_form_edit_syntax'], str(e)]]
-                raise web.seeother('/form/edit?name=%s&code=%s&mode=%s' %(
+                raise web.seeother('./form/edit?name=%s&code=%s&mode=%s' %(
                         name, urllib.quote(ocode), MODE_INSERT))
         else:
             if not validfname(name):
                 sess[SKF_CREATE] = [[_['e_form_edit_name']]]
-                raise web.seeother('/form/edit?name=%s&code=%s&form=%s' %(
+                raise web.seeother('./form/edit?name=%s&code=%s&form=%s' %(
                         name, urllib.quote(code), form))
             #
             if hasws(name):
                 sess[SKF_CREATE] = [[_['e_form_edit_whitespace']]]
-                raise web.seeother('/form/edit?name=%s&code=%s&form=%s' %(
+                raise web.seeother('./form/edit?name=%s&code=%s&form=%s' %(
                         name, urllib.quote(code), form))
             #
             if not name or not code:
-                raise web.seeother('/form/edit?name=%s&code=%s&form=%s' %(
+                raise web.seeother('./form/edit?name=%s&code=%s&form=%s' %(
                         name, urllib.quote(code), form))
             #
             all = s_select('form.code')
             allf = [x['d'] for x in all]
             if (name != form) and (name in allf):
                 sess[SKF_CREATE] = [[_['e_form_edit_exists']]]
-                raise web.seeother('/form/edit?name=%s&code=%s&form=%s' %(
+                raise web.seeother('./form/edit?name=%s&code=%s&form=%s' %(
                         name, urllib.quote(code), form))
             #
             ocode = code
@@ -9232,11 +9230,11 @@ class form_edit:
                     vars={'a': 'form', 'b': 'code', 'd': form}, d=name, e=ocode)
             except Exception, e:
                 sess[SKF_CREATE] = [[_['e_form_edit_syntax'], str(e)]]
-                raise web.seeother('/form/edit?name=%s&code=%s&form=%s' %(
+                raise web.seeother('./form/edit?name=%s&code=%s&form=%s' %(
                         name, urllib.quote(ocode), form))
         #
         if xform:
-            raise web.seeother('/?form=%s' %(xform))
+            raise web.seeother('./?form=%s' %(xform))
         #
         dflt()
 
@@ -9249,10 +9247,10 @@ class report_action:
         #
         report = input.report.strip()
         redir = (
-            ('run', '/report/run/' + report),
-            ('shortcut', '/report/shortcut/' + report),
-            ('edit', '/report/edit?report=' + report),
-            ('create', '/report/edit?mode=' + MODE_INSERT),
+            ('run', './report/run/' + report),
+            ('shortcut', './report/shortcut/' + report),
+            ('edit', './report/edit?report=' + report),
+            ('create', './report/edit?mode=' + MODE_INSERT),
         )
         for i in redir:
             if input.has_key(i[0]):
@@ -9295,7 +9293,7 @@ class report_edit:
         data = {
                 'title': title,
                 'command': 'report.edit',
-                'action_url': '/report/edit',
+                'action_url': './report/edit',
                 'action_method': 'post',
                 'action_button': (
                                     ('save', _['cmd_save'], False, '', 'submit'),
@@ -9333,23 +9331,23 @@ class report_edit:
         if mode == MODE_INSERT:
             if not validfname(name):
                 sess[SKR_CREATE] = [[_['e_report_edit_name']]]
-                raise web.seeother('/report/edit?name=%s&code=%s&mode=%s' %(
+                raise web.seeother('./report/edit?name=%s&code=%s&mode=%s' %(
                         name, urllib.quote(code), MODE_INSERT))
             #
             if hasws(name):
                 sess[SKR_CREATE] = [[_['e_report_edit_whitespace']]]
-                raise web.seeother('/report/edit?name=%s&code=%s&mode=%s' %(
+                raise web.seeother('./report/edit?name=%s&code=%s&mode=%s' %(
                         name, urllib.quote(code), MODE_INSERT))
             #
             if not name or not code:
-                raise web.seeother('/report/edit?name=%s&code=%s&mode=%s' %(
+                raise web.seeother('./report/edit?name=%s&code=%s&mode=%s' %(
                         name, urllib.quote(code), MODE_INSERT))
             #
             all = s_select('report.code')
             allf = [x['d'] for x in all]
             if name in allf:
                 sess[SKR_CREATE] = [[_['e_report_edit_exists']]]
-                raise web.seeother('/report/edit?name=%s&code=%s&mode=%s' %(
+                raise web.seeother('./report/edit?name=%s&code=%s&mode=%s' %(
                         name, urllib.quote(code), MODE_INSERT))
             #
             ocode = code
@@ -9360,28 +9358,28 @@ class report_edit:
                 db.insert(FORM_TBL, a='report', b='code', d=name, e=ocode)
             except Exception, e:
                 sess[SKR_CREATE] = [[_['e_report_edit_syntax'], str(e)]]
-                raise web.seeother('/report/edit?name=%s&code=%s&mode=%s' %(
+                raise web.seeother('./report/edit?name=%s&code=%s&mode=%s' %(
                         name, urllib.quote(ocode), MODE_INSERT))
         else:
             if not validfname(name):
                 sess[SKR_CREATE] = [[_['e_report_edit_name']]]
-                raise web.seeother('/report/edit?name=%s&code=%s&report=%s' %(
+                raise web.seeother('./report/edit?name=%s&code=%s&report=%s' %(
                         name, urllib.quote(code), report))
             #
             if hasws(name):
                 sess[SKR_CREATE] = [[_['e_report_edit_whitespace']]]
-                raise web.seeother('/report/edit?name=%s&code=%s&report=%s' %(
+                raise web.seeother('./report/edit?name=%s&code=%s&report=%s' %(
                         name, urllib.quote(code), report))
             #
             if not name or not code:
-                raise web.seeother('/report/edit?name=%s&code=%s&report=%s' %(
+                raise web.seeother('./report/edit?name=%s&code=%s&report=%s' %(
                         name, urllib.quote(code), report))
             #
             all = s_select('report.code')
             allf = [x['d'] for x in all]
             if (name != report) and (name in allf):
                 sess[SKR_CREATE] = [[_['e_report_edit_exists']]]
-                raise web.seeother('/report/edit?name=%s&code=%s&report=%s' %(
+                raise web.seeother('./report/edit?name=%s&code=%s&report=%s' %(
                         name, urllib.quote(code), report))
             #
             ocode = code
@@ -9405,11 +9403,11 @@ class report_edit:
                     vars={'a': 'report', 'b': 'code', 'd': report}, d=name, e=ocode)
             except Exception, e:
                 sess[SKR_CREATE] = [[_['e_report_edit_syntax'], str(e)]]
-                raise web.seeother('/report/edit?name=%s&code=%s&report=%s' %(
+                raise web.seeother('./report/edit?name=%s&code=%s&report=%s' %(
                         name, urllib.quote(ocode), report))
         #
         if xreport:
-            raise web.seeother('/?report=%s' %(xreport))
+            raise web.seeother('./?report=%s' %(xreport))
         #
         dflt()
         
@@ -9477,7 +9475,7 @@ class report_run:
                 'message': message,
                 'input': input,
                 'hidden': (('hreport', report),),
-                'action_url': '/report/run/%s' %(report),
+                'action_url': './report/run/%s' %(report),
                 'action_method': 'post',
                 'action_enctype': 'multipart/form-data',
                 'action_button': action_button,
@@ -9565,7 +9563,7 @@ class report_run:
                     cv = cv_test.strip()
             except Exception, e:
                 sess[SKR_RUN] = [ [_['e_report_select_general'], str(e)] ]
-                raise web.seeother('/report/run/%s' %(report))
+                raise web.seeother('./report/run/%s' %(report))
             #
             if required == 1 and not cv:
                 ecols.append(key)
@@ -9630,7 +9628,7 @@ class report_run:
         if errors:
             sess[SKR_RUN] = errors
             ucontent = uquery(ocols)
-            raise web.seeother('/report/run/%s?%s' %(report, ucontent))
+            raise web.seeother('./report/run/%s?%s' %(report, ucontent))
         else:
             try:
                 #python handler or sql query
@@ -9649,7 +9647,7 @@ class report_run:
                     rreport = db.query(rquery, vars=ocols)
             except Exception, e:
                 sess[SKR_RUN] = [ [_['e_report_select_general'], str(e)] ]
-                raise web.seeother('/report/run/%s' %(report))
+                raise web.seeother('./report/run/%s' %(report))
         #
         r_row_count = -1
         r_report_result = -1
@@ -9880,7 +9878,7 @@ class report_run:
                                     [_['th_error'], str(e)]
                                 ]
                 ucontent = uquery(ocols)
-                raise web.seeother('/report/run/%s?%s' %(report, ucontent))
+                raise web.seeother('./report/run/%s?%s' %(report, ucontent))
             else:
                 disposition = 'attachment; filename=' + '%s%s' %(report, CSV_SUFFIX)
                 web.header('Content-Type', CSV_CTYPE)
@@ -9895,7 +9893,7 @@ class report_run:
                                     [_['th_error'], str(e)]
                                 ]
                 ucontent = uquery(ocols)
-                raise web.seeother('/report/run/%s?%s' %(report, ucontent))
+                raise web.seeother('./report/run/%s?%s' %(report, ucontent))
             else:
                 disposition = 'attachment; filename=' + '%s%s' %(report, PDF_SUFFIX)
                 web.header('Content-Type', PDF_CTYPE)
@@ -9910,17 +9908,17 @@ class notes:
         start()
         #
         xaction = [
-                    (_['cmd_calculator'], '/calculator?src=notes&sid='),
+                    (_['cmd_calculator'], './calculator?src=notes&sid='),
                 ]
         if isadmin():
             xaction.append(
-                        (_['cmd_query_src'], '/query?src=notes&sid='),
+                        (_['cmd_query_src'], './query?src=notes&sid='),
                     )
         #
         data = {
                 'title': _['tt_notes'],
                 'command': 'notes',
-                'action_url': '/notes',
+                'action_url': './notes',
                 'action_method': 'post',
                 'action_button': (
                                     ('save', _['cmd_save'], False, '', 'submit'),
@@ -10039,7 +10037,7 @@ class notes:
             msg.append(m)
         #
         sess[SK_NOTES] = msg
-        raise web.seeother('/notes')
+        raise web.seeother('./notes')
 
 
 class files:
@@ -10047,14 +10045,14 @@ class files:
         start()
         #
         xaction = (
-                    (_['cmd_view'], '/fs?sid=', '_blank'),
-                    (_['cmd_download'], '/fs?download=1&sid=', '_blank'),
+                    (_['cmd_view'], './fs?sid=', '_blank'),
+                    (_['cmd_download'], './fs?download=1&sid=', '_blank'),
                 )
         #
         data = {
                 'title': _['tt_files'],
                 'command': 'files',
-                'action_url': '/files',
+                'action_url': './files',
                 'action_method': 'post',
                 'action_enctype': 'multipart/form-data',
                 'action_button': (
@@ -10217,7 +10215,7 @@ class files:
             msg.append(m)
         #        
         sess[SK_FILES] = msg
-        raise web.seeother('/files')
+        raise web.seeother('./files')
 
 
 class fs:
@@ -10255,7 +10253,7 @@ class pages:
         data = {
                 'title': _['tt_pages'],
                 'command': 'pages',
-                'action_url': '/pages',
+                'action_url': './pages',
                 'action_method': 'post',
                 'action_button': (
                                     ('save', _['cmd_save'], False, '', 'submit'),
@@ -10265,7 +10263,7 @@ class pages:
                             _['x_preview'], 
                         ),                                
                 'message': smsgq(SK_PAGES),
-                'url': '/page/%s' %(user()),
+                'url': './page/%s' %(user()),
                 'hint': _['h_pages'],
             }
         #
@@ -10302,7 +10300,7 @@ class pages:
         except:
             sess[SK_PAGES] = _['e_pages']
         #
-        raise web.seeother('/pages')
+        raise web.seeother('./pages')
 
 
 class page:
@@ -10357,7 +10355,7 @@ class calculator:
         data = {
             'title': '%s' %(_['tt_calculator']),
             'command': 'calculator',
-            'action_url': '/calculator',
+            'action_url': './calculator',
             'action_method': 'post',
             'action_button': (
                                 ('calculate', _['cmd_calculate'], False, '', 'submit'),
@@ -10376,7 +10374,7 @@ class calculator:
         q0 = q
         q = re.compile('\s+', re.M).sub('', q)
         if not q:
-            raise web.seeother('/calculator')
+            raise web.seeother('./calculator')
         #
         error = 1
         #
@@ -10407,7 +10405,7 @@ class calculator:
         t = rt()
         #
         sess[SK_CALCULATOR] = [q0, err, msg, t, error]
-        raise web.seeother('/calculator')
+        raise web.seeother('./calculator')
 
 
 class admin_scripts:
@@ -10417,7 +10415,7 @@ class admin_scripts:
         data = {
                 'title': _['tt_scripts'],
                 'command': 'scripts',
-                'action_url': '/admin/scripts',
+                'action_url': './admin/scripts',
                 'action_method': 'post',
                 'action_enctype': 'multipart/form-data',
                 'action_button': (
@@ -10444,11 +10442,11 @@ class admin_scripts:
         d_new = inp.d_new
         #
         if not hasattr(d_new, 'filename'):
-            raise web.seeother('/admin/scripts')
+            raise web.seeother('./admin/scripts')
         #
         fname = d_new.filename
         if not fname:
-            raise web.seeother('/admin/scripts')
+            raise web.seeother('./admin/scripts')
         #
         code = ''
         dcode = {}
@@ -10480,7 +10478,7 @@ class admin_scripts:
                     [ fname, str(e) ],
                 ]
             sess[SK_SCRIPTS] = msg
-            raise web.seeother('/admin/scripts')
+            raise web.seeother('./admin/scripts')
         #
         sname = dcode.get(SCRIPT_KEY_NAME, '')
         if isstr(sname):
@@ -10490,7 +10488,7 @@ class admin_scripts:
                     [ _['e_scripts_name'] ],
                 ]
             sess[SK_SCRIPTS] = msg
-            raise web.seeother('/admin/scripts')            
+            raise web.seeother('./admin/scripts')            
         #
         try:
             g['user'] = user()
@@ -10514,7 +10512,7 @@ class admin_scripts:
         except:
             pass
         #
-        raise web.seeother('/admin/scripts')
+        raise web.seeother('./admin/scripts')
 
 
 class admin_script:
@@ -10571,7 +10569,7 @@ class admin_script:
         data = {
                 'title': _['tt_script'],
                 'command': 'script',
-                'action_url': '/admin/script/%s' %(script,),
+                'action_url': './admin/script/%s' %(script,),
                 'action_method': 'post',
                 'action_enctype': 'multipart/form-data',
                 'action_button': action_button,
@@ -10627,7 +10625,7 @@ class admin_script:
         if not scode:
             dflt()
         #
-        url = '/admin/script/%s' %(script,)
+        url = './admin/script/%s' %(script,)
         #        
         content = xparsescript(scode)
         if not xokscript(content):
@@ -10877,7 +10875,7 @@ class table_copy:
         data = {
                 'title': _['tt_copy'],
                 'command': 'copy',
-                'action_url': '/table/copy',
+                'action_url': './table/copy',
                 'action_method': 'post',
                 'action_enctype': 'multipart/form-data',
                 'action_button': action_button,
@@ -10989,7 +10987,7 @@ class table_copy:
         #
         sess[SKT_M_COPY] = msg
         #
-        raise web.seeother('/table/copy?table=' + table)
+        raise web.seeother('./table/copy?table=' + table)
 
 
 class table_empty:
@@ -11011,7 +11009,7 @@ class table_empty:
             'command': 'empty',
             'table': table,
             'hidden': (('table', table), ('confirm', '1')),
-            'action_url': '/table/empty',
+            'action_url': './table/empty',
             'action_method': 'post',
             'action_button': (
                                 ('empty', _['cf_empty'], False, '', 'submit'),
@@ -11056,7 +11054,7 @@ class table_empty:
         #
         sess.table[table][SKT_M_EMPTY] = msg
         #
-        redir = '/table/empty?table=%s' %(table)
+        redir = './table/empty?table=%s' %(table)
         raise web.seeother(redir)
 
 
@@ -11068,7 +11066,7 @@ class vacuum:
             'title': '%s' %(_['tt_vacuum']),
             'command': 'vacuum',
             'hidden': (('confirm', '1'),),
-            'action_url': '/vacuum',
+            'action_url': './vacuum',
             'action_method': 'post',
             'action_button': (
                                 ('vacuum', _['cf_vacuum'], False, '', 'submit'),
@@ -11122,7 +11120,7 @@ class vacuum:
         #
         sess[SKV] = msg
         #
-        raise web.seeother('/vacuum')
+        raise web.seeother('./vacuum')
 
 
 class form_shortcut:
@@ -11150,7 +11148,7 @@ class form_shortcut:
         if not res:
             dflt()
         else:
-            raise web.seeother('/?form=%s' %(form))
+            raise web.seeother('./?form=%s' %(form))
 
 
 class report_shortcut:
@@ -11178,7 +11176,7 @@ class report_shortcut:
         if not res:
             dflt()
         else:
-            raise web.seeother('/?report=%s' %(report))
+            raise web.seeother('./?report=%s' %(report))
 
 
 class table_import_csv:
@@ -11201,7 +11199,7 @@ class table_import_csv:
             'table': table,
             'hidden': (('table', table),),
             'action_enctype': 'multipart/form-data',
-            'action_url': '/table/import/csv',
+            'action_url': './table/import/csv',
             'action_method': 'post',
             'action_button': (
                                 ('import', _['cmd_import_csv'], False, '', 'submit'),
@@ -11220,7 +11218,7 @@ class table_import_csv:
         table = inp.table.strip().lower()
         f = inp.f
         #
-        redir = '/table/import/csv?table=%s' %(table)        
+        redir = './table/import/csv?table=%s' %(table)        
         #
         if not table in tables(): 
             dflt()
@@ -11310,7 +11308,7 @@ class profile:
             'title': '%s' %(_['tt_profile']),
             'command': 'profile',
             'action_enctype': 'multipart/form-data',
-            'action_url': '/profile',
+            'action_url': './profile',
             'action_method': 'post',
             'action_button': (
                                 ('save', _['cmd_save'], False, '', 'submit'),
@@ -11368,7 +11366,7 @@ class profile:
         #
         sess[SK_PROFILE] = msg
         #
-        raise web.seeother('/profile')
+        raise web.seeother('./profile')
 
 
 class table_schema:
@@ -11384,7 +11382,7 @@ class table_schema:
         data = {
                 'title': '%s - %s' %(table, _['tt_schema']),
                 'command': 'schema',
-                'action_url': '/table/schema',
+                'action_url': './table/schema',
                 'action_method': 'post',
                 'action_enctype': 'multipart/form-data',
                 'action_button': (
@@ -11414,7 +11412,7 @@ class table_schema:
         if not table in oldtables:
             dflt()
         #
-        redir = '/table/schema?table=%s&target=%s' %(table, target)
+        redir = './table/schema?table=%s&target=%s' %(table, target)
         #
         if not target:
             raise web.seeother(redir)
@@ -11453,7 +11451,7 @@ class table_schema:
                             ]
             raise web.seeother(redir)
         else:
-            raise web.seeother('/table/browse/%s' %(target))
+            raise web.seeother('./table/browse/%s' %(target))
         #
         dflt()
         
