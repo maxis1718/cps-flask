@@ -96,11 +96,10 @@
 <div class="container main-block-wrap">
     {% block main %}
     {% endblock %}
+    <footer>
+        <div>2014 cpsquare</div>
+    </footer>
 </div>
-
-<footer>
-    <div></div>
-</footer>
 
 
 </body>

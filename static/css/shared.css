@@ -12,21 +12,22 @@ body
 }
 footer
 {
-  position: fixed;
+  position: relative;
   bottom: 0;
   height: 24px;
   line-height: 24px;
-  background: none;
+  /*background: blue;*/
   width: 100%;
-  text-align: right;
-  padding-right: 12px;
+  text-align: center;
+  /*padding-right: 12px;*/
   font-size: 12px;
-  color: #428bca;
+  /*color: #428bca;*/
+  color: #aaa;
 }
   footer div, footer a
   {
-    float: right;
-    padding-left: 8px;
+    /*float: right;*/
+    /*padding-left: 8px;*/
   }
 
 a
