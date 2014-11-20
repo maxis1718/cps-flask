@@ -178,7 +178,7 @@ class ProductTranslation(translation_base(Product)):
 @app.route('/<lang>/')
 def show_index(lang=settings.LANG):
     news_list = News.query.order_by('publish_time').limit(5)
-    return render_template( 'index.tpl', settings=settings, lang=lang, news_list=news_list, is_index=True )
+    return render_template( 'index.tpl', settings=settings, lang=lang, news_list=list(enumerate(news_list)), is_index=True )
 
 @app.route('/<lang>/news')
 @app.route('/<lang>/news/')

@@ -33,8 +33,28 @@
 
 .news-wrap
 {
-  background: #eee;
+  /*background: #eee;*/
 }
+
+  .news-wrap .news-block
+  {
+    padding-bottom: 16px;
+  }
+   .news-wrap .news-block .index-news-img-wrap
+   {
+      padding-top: 16px;
+      padding-bottom: 16px;
+      text-align: center;
+   }
+     .news-wrap .news-block .index-news-img-wrap .index-news-img
+     {
+        padding: 5px;
+        /*border: 1px solid #ddd;*/
+     }   
+      .news-wrap .news-block .index-news-title
+      {
+        font-size: 1.5em;        
+      }
 
 .other-info-wrap
 {

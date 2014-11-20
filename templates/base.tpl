@@ -33,6 +33,8 @@
     {% block extra_js %}
     {% endblock %}
 
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
     <!--[if lt IE 9]>
     <script src="{{ url_for('static', filename='js/html5shiv.js') }}"></script>
     <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
